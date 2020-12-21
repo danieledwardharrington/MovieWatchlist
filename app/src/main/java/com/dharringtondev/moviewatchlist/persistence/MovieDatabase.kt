@@ -8,15 +8,16 @@ import androidx.room.RoomDatabase
 @Database(entities = [MovieEntity::class], version = 1)
 abstract class MovieDatabase: RoomDatabase() {
 
-    abstract fun movieDao(): MovieDao
+    abstract fun watchlistDao(): MovieDao
 
     companion object {
-        private var instance: MovieDatabase? = null
 
-        fun getInstance(context: Context): MovieDatabase? {
-            if (instance == null) {
+        private var watchlistInstance: MovieDatabase? = null
+
+        fun getWatchlistInstance(context: Context): MovieDatabase? {
+            if (watchlistInstance == null) {
                 synchronized(MovieDatabase::class) {
-                    instance = Room.databaseBuilder(
+                    watchlistInstance = Room.databaseBuilder(
                         context.applicationContext,
                         MovieDatabase::class.java,
                         "watchlist_db.db"
@@ -24,8 +25,9 @@ abstract class MovieDatabase: RoomDatabase() {
                 }
             }
 
-            return instance
+            return watchlistInstance
         }
+
     }
 
 }

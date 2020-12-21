@@ -1,6 +1,7 @@
 package com.dharringtondev.moviewatchlist.persistence
 
 import androidx.room.*
+import com.dharringtondev.moviewatchlist.persistence.MovieEntity
 import io.reactivex.Completable
 import io.reactivex.Observable
 
@@ -18,5 +19,11 @@ interface MovieDao {
 
     @Query("SELECT * FROM movie_table ORDER BY id ASC")
     fun getAllMovies(): Observable<List<MovieEntity>>
+
+    @Query("SELECT * FROM movie_table WHERE watched=1")
+    fun getAllWatchedMovies(): Observable<List<MovieEntity>>
+
+    @Query("SELECT * FROM movie_table WHERE watched=0")
+    fun getMovieWatchlist(): Observable<List<MovieEntity>>
 
 }
