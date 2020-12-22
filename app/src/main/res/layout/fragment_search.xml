@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/start_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.02"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/top_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.02"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/results_rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/_4sdp"
+        app:layout_constraintTop_toTopOf="@id/top_guideline"
+        app:layout_constraintBottom_toTopOf="@id/movie_sv"
+        tools:listitem="@layout/card_view_movie"
+        />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/movie_sv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/MovieSearch"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:queryHint="Search by title"
+        app:defaultQueryHint="Search by title" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
