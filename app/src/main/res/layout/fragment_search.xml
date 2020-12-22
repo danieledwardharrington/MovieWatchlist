@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.SearchFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/start_guideline"
@@ -31,11 +32,15 @@
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/movie_sv"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         style="@style/MovieSearch"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:queryHint="Search by title"
-        app:defaultQueryHint="Search by title" />
+        app:queryBackground="@android:color/transparent"
+        app:defaultQueryHint="Search by title"
+        app:iconifiedByDefault="false"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.WatchlistFragment">
+    tools:context=".ui.WatchedFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/watchlist_rv"
+        android:id="@+id/watched_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/card_view_movie"/>
