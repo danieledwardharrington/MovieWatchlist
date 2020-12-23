@@ -18,6 +18,16 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.02"/>
 
+        <ImageView
+            android:id="@+id/about_icon_iv"
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_48sdp"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toTopOf="@id/top_guideline"
+            app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:contentDescription="Icon" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/top_guideline"
             android:layout_width="wrap_content"
@@ -37,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintStart_toEndOf="@id/about_icon_iv"
             app:layout_constraintTop_toTopOf="@id/top_guideline"
             app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
             android:text="About"
