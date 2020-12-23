@@ -8,6 +8,21 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.dharringtondev.moviewatchlist.ui.SearchFragment"
-        android:label="fragment_search"
+        android:label="Search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/watchlistFragment"
+        android:name="com.dharringtondev.moviewatchlist.ui.WatchlistFragment"
+        android:label="Watchlist"
+        tools:layout="@layout/fragment_watchlist" />
+    <fragment
+        android:id="@+id/watchedFragment"
+        android:name="com.dharringtondev.moviewatchlist.ui.WatchedFragment"
+        android:label="Watched"
+        tools:layout="@layout/fragment_watched" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.dharringtondev.moviewatchlist.ui.AboutFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_about" />
 </navigation>

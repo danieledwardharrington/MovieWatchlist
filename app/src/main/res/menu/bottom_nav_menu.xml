@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/ic_search_gray"
+        android:title="Search"
+        />
+
+    <item
+        android:id="@+id/watchlistFragment"
+        android:icon="@drawable/ic_watchlist"
+        android:title="Watchlist"
+        />
+
+    <item
+        android:id="@+id/watchedFragment"
+        android:icon="@drawable/ic_watched"
+        android:title="Watched"
+        />
+
+    <item
+        android:id="@+id/aboutFragment"
+        android:icon="@drawable/ic_info_gray"
+        android:title="About"
+        />
+
+</menu>
