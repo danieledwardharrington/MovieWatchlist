@@ -29,6 +29,8 @@ data class MovieEntity(@ColumnInfo(name = "imdb_id")
                        private var imdbRating: String = "",
                        @ColumnInfo(name = "poster_url")
                        private var posterUrl: String = "",
+                       @ColumnInfo(name = "age_rating")
+                       private var ageRating: String = "",
                        @ColumnInfo(name = "watched")
                        private var watched: Boolean = false
                        ) {
@@ -138,6 +140,14 @@ data class MovieEntity(@ColumnInfo(name = "imdb_id")
 
     fun setPosterUrl(newUrl: String) {
         posterUrl = newUrl
+    }
+
+    fun getAgeRating(): String {
+        return ageRating
+    }
+
+    fun setAgeRating(newRating: String) {
+        ageRating = newRating
     }
 
     fun getWatched(): Boolean {
