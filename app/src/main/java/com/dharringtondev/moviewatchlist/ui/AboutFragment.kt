@@ -1,6 +1,7 @@
 package com.dharringtondev.moviewatchlist.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dharringtondev.moviewatchlist.R
 import com.dharringtondev.moviewatchlist.adapters.AboutAdapter
 import com.dharringtondev.moviewatchlist.databinding.FragmentAboutBinding
+import com.google.android.play.core.review.ReviewManagerFactory
 
 class AboutFragment: Fragment(), AboutAdapter.OnItemClickedListener {
+
+    private val TAG = "AboutFragment"
 
     private var _binding: FragmentAboutBinding? = null
     private val binding get() = _binding!!
@@ -42,18 +46,38 @@ class AboutFragment: Fragment(), AboutAdapter.OnItemClickedListener {
     }
 
     override fun onItemClicked(itemName: String) {
+        Log.d(TAG, itemName)
         when (itemName) {
             "Donate" -> {
 
             }
             "Rate" -> {
-
+                launchReview()
             }
             "Share" -> {
 
             }
             "Licenses" -> {
 
+            }
+        }
+    }
+
+    private fun launchReview() {
+        val manager = ReviewManagerFactory.create(requireContext())
+        val request = manager.requestReviewFlow()
+        request.addOnCompleteListener { request ->
+            if (request.isSuccessful) {
+                // We got the ReviewInfo object
+                val reviewInfo = request.result
+                val flow = activity?.let { manager.launchReviewFlow(it, reviewInfo) }
+                flow!!.addOnCompleteListener { _ ->
+                    // The flow has finished. The API does not indicate whether the user
+                    // reviewed or not, or even whether the review dialog was shown. Thus, no
+                    // matter the result, we continue our app flow.
+                }
+            } else {
+                // There was some problem, continue regardless of the result.
             }
         }
     }
