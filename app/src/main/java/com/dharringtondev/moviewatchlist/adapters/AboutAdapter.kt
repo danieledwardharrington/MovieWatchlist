@@ -1,6 +1,7 @@
 package com.dharringtondev.moviewatchlist.adapters
 
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,19 @@ import com.dharringtondev.moviewatchlist.databinding.CardViewAboutBinding
 
 class AboutAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private val TAG = "AboutAdapter"
+
     private val aboutList = arrayListOf<String>("Donate", "Rate", "Share", "Licenses")
     private val iconList = arrayListOf<Int>(R.drawable.ic_donate, R.drawable.ic_rate, R.drawable.ic_share, R.drawable.ic_licenses)
+    private lateinit var clickedListener: OnItemClickedListener
+
+    interface OnItemClickedListener {
+        fun onItemClicked(itemName: String)
+    }
+
+    fun setItemClickedListener(newListener: OnItemClickedListener) {
+        clickedListener = newListener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemBinding = CardViewAboutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -22,6 +34,10 @@ class AboutAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         when (holder) {
             is AboutAdapter.AboutViewHolder -> {
                 holder.bind(aboutList[position], iconList[position])
+                holder.itemView.setOnClickListener {
+                    Log.d(TAG, "item clicked")
+                    clickedListener.onItemClicked(aboutList[position])
+                }
             }
         }
     }
@@ -30,7 +46,7 @@ class AboutAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return aboutList.size
     }
 
-    class AboutViewHolder constructor(itemBinding: CardViewAboutBinding): RecyclerView.ViewHolder(itemBinding.root) {
+    class AboutViewHolder(itemBinding: CardViewAboutBinding): RecyclerView.ViewHolder(itemBinding.root) {
         private val aboutIconIV = itemBinding.aboutIconIv
         private val aboutItemTV = itemBinding.aboutItemTv
 
