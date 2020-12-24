@@ -2,14 +2,13 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_2sdp"
-    android:layout_marginBottom="@dimen/_2sdp"
-    android:elevation="@dimen/_4sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/start_guideline"
@@ -20,8 +19,8 @@
 
         <ImageView
             android:id="@+id/about_icon_iv"
-            android:layout_width="@dimen/_48sdp"
-            android:layout_height="@dimen/_48sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toTopOf="@id/top_guideline"
             app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
@@ -46,12 +45,13 @@
             android:id="@+id/about_item_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
             android:fontFamily="sans-serif"
             app:layout_constraintStart_toEndOf="@id/about_icon_iv"
             app:layout_constraintTop_toTopOf="@id/top_guideline"
             app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
             android:text="About"
-            android:textSize="@dimen/_22sdp"/>
+            android:textSize="@dimen/_16sdp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
