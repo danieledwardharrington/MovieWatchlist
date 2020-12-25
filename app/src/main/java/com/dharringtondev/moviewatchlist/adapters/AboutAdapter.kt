@@ -1,9 +1,7 @@
 package com.dharringtondev.moviewatchlist.adapters
 
-import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dharringtondev.moviewatchlist.R
@@ -13,8 +11,8 @@ class AboutAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TAG = "AboutAdapter"
 
-    private val aboutList = arrayListOf<String>("Donate", "Rate", "Share", "Licenses")
-    private val iconList = arrayListOf<Int>(R.drawable.ic_donate, R.drawable.ic_rate, R.drawable.ic_share, R.drawable.ic_licenses)
+    private val aboutList = arrayListOf<String>("Donate", "Rate", "Share", "Libraries")
+    private val iconList = arrayListOf<Int>(R.drawable.ic_donate, R.drawable.ic_rate, R.drawable.ic_share, R.drawable.ic_libraries)
     private lateinit var clickedListener: OnItemClickedListener
 
     interface OnItemClickedListener {
