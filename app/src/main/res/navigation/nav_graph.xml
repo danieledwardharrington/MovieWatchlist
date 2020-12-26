@@ -24,5 +24,22 @@
         android:id="@+id/aboutFragment"
         android:name="com.dharringtondev.moviewatchlist.ui.AboutFragment"
         android:label="About"
-        tools:layout="@layout/fragment_about" />
+        tools:layout="@layout/fragment_about" >
+        <action
+            android:id="@+id/action_aboutFragment_to_librariesFragment"
+            app:destination="@id/librariesFragment" />
+        <action
+            android:id="@+id/action_aboutFragment_to_coffeeFragment"
+            app:destination="@id/coffeeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/librariesFragment"
+        android:name="com.dharringtondev.moviewatchlist.ui.LibrariesFragment"
+        android:label="fragment_libraries"
+        tools:layout="@layout/fragment_libraries" />
+    <fragment
+        android:id="@+id/coffeeFragment"
+        android:name="com.dharringtondev.moviewatchlist.ui.CoffeeFragment"
+        android:label="fragment_coffee"
+        tools:layout="@layout/fragment_coffee" />
 </navigation>

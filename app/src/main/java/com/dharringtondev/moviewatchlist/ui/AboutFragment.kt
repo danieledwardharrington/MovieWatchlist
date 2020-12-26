@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dharringtondev.moviewatchlist.R
@@ -47,9 +48,10 @@ class AboutFragment: Fragment(), AboutAdapter.OnItemClickedListener {
 
     override fun onItemClicked(itemName: String) {
         Log.d(TAG, itemName)
+        val navController = findNavController()
         when (itemName) {
-            "Donate" -> {
-
+            "Buy Me Coffee" -> {
+                navController.navigate(R.id.coffeeFragment)
             }
             "Rate" -> {
                 launchReview()
@@ -57,8 +59,8 @@ class AboutFragment: Fragment(), AboutAdapter.OnItemClickedListener {
             "Share" -> {
 
             }
-            "Licenses" -> {
-
+            "Libraries" -> {
+                navController.navigate(R.id.librariesFragment)
             }
         }
     }
