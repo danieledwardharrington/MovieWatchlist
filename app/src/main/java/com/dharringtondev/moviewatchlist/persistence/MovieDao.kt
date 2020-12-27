@@ -1,9 +1,8 @@
 package com.dharringtondev.moviewatchlist.persistence
 
 import androidx.room.*
-import com.dharringtondev.moviewatchlist.persistence.MovieEntity
-import io.reactivex.Completable
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 
 @Dao
 interface MovieDao {
@@ -14,8 +13,11 @@ interface MovieDao {
     @Delete
     fun delete(movie: MovieEntity): Completable
 
+    @Update
+    fun update(movie: MovieEntity): Completable
+
     @Query("DELETE FROM movie_table")
-    fun deleteAllMovies()
+    fun deleteAllMovies(): Completable
 
     @Query("SELECT * FROM movie_table ORDER BY id ASC")
     fun getAllMovies(): Observable<List<MovieEntity>>
