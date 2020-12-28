@@ -14,8 +14,8 @@ class MovieRepository(application: Application) {
     private val movieDao: MovieDao = database!!.watchlistDao()
     private var compositeDisposable = CompositeDisposable()
 
-    private var watchedMoviesList = MutableLiveData<List<MovieEntity>>()
-    private var movieWatchlist = MutableLiveData<List<MovieEntity>>()
+    private var watchedMoviesLiveData = MutableLiveData<List<MovieEntity>>()
+    private var movieWatchlistLiveData = MutableLiveData<List<MovieEntity>>()
 
     fun insert(movieEntity: MovieEntity) {
         movieDao.insert(movieEntity).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
@@ -46,7 +46,7 @@ class MovieRepository(application: Application) {
         movieDao.getAllWatchedMovies().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
             {
                 if (!it.isNullOrEmpty()) {
-                    watchedMoviesList.postValue(it)
+                    watchedMoviesLiveData.postValue(it)
                 }
             },
             {Log.d(TAG, it.toString())}
@@ -59,10 +59,10 @@ class MovieRepository(application: Application) {
         movieDao.getMovieWatchlist().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
             {
                 if (!it.isNullOrEmpty()) {
-                    movieWatchlist.postValue(it)
+                    movieWatchlistLiveData.postValue(it)
                 }
             },
-            {}
+            {Log.d(TAG, it.toString())}
         ).let {
             compositeDisposable.add(it)
         }
@@ -77,6 +77,14 @@ class MovieRepository(application: Application) {
 
     fun getCompositeDisposable(): CompositeDisposable {
         return compositeDisposable
+    }
+
+    fun getMovieWatchlistLiveData(): MutableLiveData<List<MovieEntity>> {
+        return movieWatchlistLiveData
+    }
+
+    fun getWatchedMoviesLiveData(): MutableLiveData<List<MovieEntity>> {
+        return watchedMoviesLiveData
     }
 
 }

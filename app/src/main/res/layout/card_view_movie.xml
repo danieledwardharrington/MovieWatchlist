@@ -48,7 +48,8 @@
             app:layout_constraintTop_toTopOf="@id/top_guideline"
             app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
             app:layout_constraintStart_toStartOf="parent"
-            android:contentDescription="Poster" />
+            android:contentDescription="Poster"
+            android:src="@drawable/ic_poster_placeholder"/>
 
         <TextView
             android:id="@+id/movie_title_tv"

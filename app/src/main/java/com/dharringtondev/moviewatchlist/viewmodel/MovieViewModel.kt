@@ -9,7 +9,6 @@ import com.dharringtondev.moviewatchlist.persistence.MovieRepository
 class MovieViewModel(application: Application): ViewModel() {
 
     private val movieRepository = MovieRepository(application)
-    private var movieWatchlist = MutableLiveData<List<MovieEntity>>()
 
     fun insert(movieEntity: MovieEntity) {
         movieRepository.insert(movieEntity)
@@ -23,9 +22,29 @@ class MovieViewModel(application: Application): ViewModel() {
         movieRepository.delete(movieEntity)
     }
 
-    fun getMovieWatchlist() {
-        movieRepository.getMovieWatchlist()
+    fun getAllMovies() {
+        getMovieWatchlist()
+        getWatchedMovies()
+    }
 
+    private fun getMovieWatchlist() {
+        movieRepository.getMovieWatchlist()
+    }
+
+    private fun getWatchedMovies() {
+        movieRepository.getAllWatchedMovies()
+    }
+
+    override fun onCleared() {
+        movieRepository.getCompositeDisposable().clear()
+    }
+
+    fun getWatchlist(): MutableLiveData<List<MovieEntity>> {
+        return movieRepository.getMovieWatchlistLiveData()
+    }
+
+    fun getWatchedMoviesList(): MutableLiveData<List<MovieEntity>>{
+        return movieRepository.getWatchedMoviesLiveData()
     }
 
 }

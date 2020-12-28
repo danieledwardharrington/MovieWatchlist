@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/start_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.02"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/top_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.02"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/end_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.98"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottom_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.98"
+        />
+
+
+    <TextView
+        android:id="@+id/movie_title_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintTop_toTopOf="@id/top_guideline"
+        android:text="Movie title"
+        android:ellipsize="end"
+        android:textSize="@dimen/_22sdp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:id="@+id/year_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/movie_title_tv"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:text="2020"
+        android:textSize="@dimen/_14sdp"/>
+
+    <TextView
+        android:id="@+id/age_rating_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/year_tv"
+        app:layout_constraintTop_toBottomOf="@id/movie_title_tv"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="PG-13"
+        android:textSize="@dimen/_14sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        />
+
+    <TextView
+        android:id="@+id/runtime_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/age_rating_tv"
+        app:layout_constraintTop_toBottomOf="@id/movie_title_tv"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="96 min"
+        android:textSize="@dimen/_14sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        />
+
+    <TextView
+        android:id="@+id/imdb_rating_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/runtime_tv"
+        app:layout_constraintTop_toBottomOf="@id/movie_title_tv"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="IMDB Rating: "
+        android:textSize="@dimen/_14sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        />
+
+    <TextView
+        android:id="@+id/imdb_rating_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/imdb_rating_title_tv"
+        app:layout_constraintTop_toBottomOf="@id/movie_title_tv"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="9.1"
+        android:textSize="@dimen/_14sdp"
+        />
+
+    <ImageView
+        android:id="@+id/poster_iv"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_105sdp"
+        app:layout_constraintTop_toBottomOf="@id/year_tv"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:contentDescription="Poster"
+        android:src="@drawable/ic_poster_placeholder"
+        />
+
+    <TextView
+        android:id="@+id/plot_tv"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_105sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        app:layout_constraintStart_toEndOf="@id/poster_iv"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintTop_toBottomOf="@id/year_tv"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="This is some sample text to fill out a movie summary. This normally is only a few sentences long. This is a few sentences to simulate that length."
+        android:textSize="@dimen/_14sdp"
+        android:ellipsize="end"
+        />
+
+    <TextView
+        android:id="@+id/genre_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/plot_tv"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="Genre: "
+        android:textStyle="bold"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:id="@+id/genre_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/genre_title_tv"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintTop_toBottomOf="@id/plot_tv"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="Comedy, Drama"
+        android:textSize="@dimen/_14sdp"
+        />
+
+    <TextView
+        android:id="@+id/director_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/genre_title_tv"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="Director(s): "
+        android:textStyle="bold"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:id="@+id/director_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/director_title_tv"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintTop_toBottomOf="@id/genre_title_tv"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="First Last"
+        android:textSize="@dimen/_14sdp"
+        />
+
+    <TextView
+        android:id="@+id/writer_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/director_title_tv"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="Writer(s): "
+        android:textStyle="bold"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:id="@+id/writer_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/writer_title_tv"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintTop_toBottomOf="@id/director_title_tv"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="First Last"
+        android:textSize="@dimen/_14sdp"
+        />
+
+    <TextView
+        android:id="@+id/starring_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/writer_title_tv"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="Starring: "
+        android:textStyle="bold"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:id="@+id/starring_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/starring_title_tv"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintTop_toBottomOf="@id/writer_title_tv"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="First Last"
+        android:textSize="@dimen/_14sdp"
+        />
+
+    <TextView
+        android:id="@+id/awards_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/starring_title_tv"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="Awards: "
+        android:textStyle="bold"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:id="@+id/awards_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/awards_title_tv"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintTop_toBottomOf="@id/starring_title_tv"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="1 Oscar, 2 SAG"
+        android:textSize="@dimen/_14sdp"
+        />
+
+    <TextView
+        android:id="@+id/country_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/awards_title_tv"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="Country: "
+        android:textStyle="bold"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:id="@+id/country_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/country_title_tv"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintTop_toBottomOf="@id/awards_title_tv"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="USA"
+        android:textSize="@dimen/_14sdp"
+        />
+
+    <TextView
+        android:id="@+id/language_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/country_title_tv"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="Language: "
+        android:textStyle="bold"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:id="@+id/language_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/language_title_tv"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintTop_toBottomOf="@id/country_title_tv"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="English"
+        android:textSize="@dimen/_14sdp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
