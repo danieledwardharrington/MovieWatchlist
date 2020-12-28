@@ -49,7 +49,7 @@ class MovieRepository(application: Application) {
                     watchedMoviesList.postValue(it)
                 }
             },
-            {}
+            {Log.d(TAG, it.toString())}
         ).let {
             compositeDisposable.add(it)
         }
@@ -73,6 +73,10 @@ class MovieRepository(application: Application) {
             {Log.d(TAG, "All movies deleted")},
             {Log.d(TAG, it.toString())}
         ).let { compositeDisposable.add(it) }
+    }
+
+    fun getCompositeDisposable(): CompositeDisposable {
+        return compositeDisposable
     }
 
 }
