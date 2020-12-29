@@ -2,24 +2,29 @@ package com.dharringtondev.moviewatchlist.ui.dialogfragments
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.dharringtondev.moviewatchlist.R
 import com.dharringtondev.moviewatchlist.databinding.AlertDialogFullMovieBinding
 import com.dharringtondev.moviewatchlist.persistence.MovieEntity
+import com.dharringtondev.moviewatchlist.remote.MovieModel
 import com.dharringtondev.moviewatchlist.viewmodel.MovieViewModel
 import com.dharringtondev.moviewatchlist.viewmodel.MovieViewModelFactory
 
 class FullMovieDialog: DialogFragment() {
     private val TAG = "FullMovieDialog"
 
-    private lateinit var movie: MovieEntity
+    private val fmdArgs: FullMovieDialogArgs by navArgs()
     private lateinit var movieViewModel: MovieViewModel
+    private var imdbId: String = ""
 
     private var _binding: AlertDialogFullMovieBinding? = null
     private val binding get() = _binding!!
@@ -34,12 +39,19 @@ class FullMovieDialog: DialogFragment() {
     }
 
     private fun initComponents() {
+        Log.d(TAG, "onViewCreated")
         movieViewModel = ViewModelProvider(this, MovieViewModelFactory(requireActivity().application)).get(MovieViewModel::class.java)
-        movie = movieViewModel.getMovie()
-        setupText()
+        imdbId = fmdArgs.imdbId
+        Log.d(TAG, "initComponents; imdbId: $imdbId")
+        movieViewModel.getRemoteMovieById(imdbId)
+        movieViewModel.getRemoteMovieByIdLiveData().observe(this, Observer {
+            Log.d(TAG, "observe; ${it.getTitle()}")
+            setupText(it)
+        })
     }
 
-    private fun setupText() {
+    private fun setupText(movie: MovieModel) {
+        Log.d(TAG, "setupText")
         binding.apply {
             movieTitleTv.text = movie.getTitle()
             yearTv.text = movie.getYear()
@@ -60,7 +72,6 @@ class FullMovieDialog: DialogFragment() {
                 .centerCrop()
                 .into(posterIv)
         }
-
     }
 
     override fun onDestroyView() {

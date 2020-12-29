@@ -18,7 +18,8 @@ class MovieRepository(application: Application) {
 
     private var watchedMoviesLiveData = MutableLiveData<List<MovieEntity>>()
     private var movieWatchlistLiveData = MutableLiveData<List<MovieEntity>>()
-    private var remoteMoviesLiveData = MutableLiveData<MovieModel>()
+    private var remoteMoviesLiveData = MutableLiveData<List<MovieModel>>()
+    private var movieByIdLiveData = MutableLiveData<MovieModel>()
 
     fun insert(movieEntity: MovieEntity) {
         movieDao.insert(movieEntity).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
@@ -92,10 +93,10 @@ class MovieRepository(application: Application) {
 
     fun getRemoteMovies(filter: String) {
         Log.d(TAG, "getRemoteMovies")
-        OmdbService.create().getRemoteMovies(filter).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+        OmdbService.create().getRemoteMovies(filter, "1").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
             {
                 if(it != null) {
-                    remoteMoviesLiveData.postValue(it)
+                    remoteMoviesLiveData.postValue(it.results)
                 }
             },
             {
@@ -106,7 +107,26 @@ class MovieRepository(application: Application) {
         }
     }
 
-    fun getRemoteMoviesLiveData(): MutableLiveData<MovieModel> {
+    fun getRemoteMovieById(imdbId: String) {
+        Log.d(TAG, "getMovieById: $imdbId")
+        OmdbService.create().getMovieById(imdbId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+            {
+                if(it != null) {
+                    Log.d(TAG, "movieById not null")
+                    movieByIdLiveData.postValue(it)
+                }
+            },
+            {
+                Log.e(TAG, it.toString())
+            }
+        )
+    }
+
+    fun getRemoteMovieByIdLiveData(): MutableLiveData<MovieModel> {
+        return movieByIdLiveData
+    }
+
+    fun getRemoteMoviesLiveData(): MutableLiveData<List<MovieModel>> {
         return remoteMoviesLiveData
     }
 

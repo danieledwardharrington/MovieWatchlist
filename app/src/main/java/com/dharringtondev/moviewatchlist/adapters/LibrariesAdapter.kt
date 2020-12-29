@@ -9,7 +9,7 @@ class LibrariesAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TAG = "LibrariesAdapter"
 
-    private val librariesList = arrayListOf<String>("Glide", "Gson", "Retrofit", "Room", "RxJava3", "sdp")
+    private val librariesList = arrayListOf<String>("Glide", "Gson", "Navigation Component", "OMDb API", "Retrofit", "Room", "RxJava3", "sdp")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemBinding = CardViewLibrariesBinding.inflate(LayoutInflater.from(parent.context), parent, false)

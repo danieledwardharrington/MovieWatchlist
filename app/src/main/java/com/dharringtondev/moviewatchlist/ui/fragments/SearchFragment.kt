@@ -1,6 +1,7 @@
 package com.dharringtondev.moviewatchlist.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,17 +39,18 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
     }
 
     private fun initComponents() {
-        initViewModel()
         initRV()
-        setupSearch()
+        initViewModel()
     }
 
     private fun initViewModel() {
         movieViewModel = ViewModelProvider(this, MovieViewModelFactory(requireActivity().application)).get(MovieViewModel::class.java)
+        setupSearch()
         movieViewModel.getRemoteMoviesList().observe(viewLifecycleOwner, Observer {
-            searchedMovie = it
-            val movies = arrayListOf<MovieModel>(it)
-            searchAdapter.submitList(movies)
+            if(it != null) {
+                searchedMovies = ArrayList(it)
+                searchAdapter.submitList(searchedMovies)
+            }
         })
     }
 
@@ -64,11 +66,13 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
     private fun setupSearch () {
         binding.movieSv.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                movieViewModel.getRemoteMovies(query!!.trim())
+                Log.d(TAG, "onQueryTextSubmit; query = $query")
+                movieViewModel.getRemoteMovies(query!!)
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                Log.d(TAG, "onQueryTextChange; newText = $newText")
                 movieViewModel.getRemoteMovies(newText!!)
                 return false
             }
@@ -76,8 +80,8 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
     }
 
     override fun onMovieClicked(movie: MovieModel) {
-        movieViewModel.setMovie(movieViewModel.modelToEntity(movie))
-        findNavController().navigate(R.id.fullMovieDialog)
+        val action = SearchFragmentDirections.actionSearchFragmentToFullMovieDialog(movie.getImdbId())
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {

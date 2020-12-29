@@ -10,7 +10,6 @@ import com.dharringtondev.moviewatchlist.remote.MovieModel
 class MovieViewModel(application: Application): ViewModel() {
 
     private val movieRepository = MovieRepository(application)
-    private var movie = MovieEntity()
 
     fun insert(movieEntity: MovieEntity) {
         movieRepository.insert(movieEntity)
@@ -57,16 +56,16 @@ class MovieViewModel(application: Application): ViewModel() {
         return movieRepository.getWatchedMoviesLiveData()
     }
 
-    fun getRemoteMoviesList(): MutableLiveData<MovieModel> {
+    fun getRemoteMoviesList(): MutableLiveData<List<MovieModel>> {
         return movieRepository.getRemoteMoviesLiveData()
     }
 
-    fun getMovie(): MovieEntity {
-        return movie
+    fun getRemoteMovieById(imdbId: String) {
+        movieRepository.getRemoteMovieById(imdbId)
     }
 
-    fun setMovie(newMovie: MovieEntity) {
-        movie = newMovie
+    fun getRemoteMovieByIdLiveData(): MutableLiveData<MovieModel> {
+        return movieRepository.getRemoteMovieByIdLiveData()
     }
 
     fun modelToEntity(movieModel: MovieModel): MovieEntity {

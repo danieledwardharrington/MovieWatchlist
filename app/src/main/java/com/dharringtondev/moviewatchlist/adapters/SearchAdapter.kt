@@ -68,6 +68,12 @@ class SearchAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyItemRangeChanged(position, movieList.size)
     }
 
+    fun removeAll() {
+        val size = movieList.size
+        movieList.clear()
+        notifyItemRangeChanged(0, size)
+    }
+
     class SearchViewHolder(itemBinding: CardViewMovieBinding, parentContext: Context): RecyclerView.ViewHolder(itemBinding.root) {
         private val TAG = "SearchViewHolder"
 
