@@ -1,7 +1,6 @@
 package com.dharringtondev.moviewatchlist.remote
 
 import com.dharringtondev.moviewatchlist.BuildConfig
-import com.dharringtondev.moviewatchlist.persistence.MovieEntity
 import io.reactivex.rxjava3.core.Observable
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -12,8 +11,8 @@ import retrofit2.http.Query
 
 interface OmdbService {
 
-    @GET
-    fun getRemoteMovies(@Query("t") title: String): Observable<List<MovieEntity>>
+    @GET("?apikey=1fa7ed15")
+    fun getRemoteMovies(@Query("t") title: String): Observable<MovieModel>
 
     companion object {
         fun create(): OmdbService {

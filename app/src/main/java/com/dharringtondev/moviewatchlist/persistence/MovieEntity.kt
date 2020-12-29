@@ -34,13 +34,14 @@ data class MovieEntity(@ColumnInfo(name = "imdb_id")
                        @ColumnInfo(name = "runtime")
                        private var runtime: String = "",
                        @ColumnInfo(name = "genre")
-                       private var genre: String = "",
-                       @ColumnInfo(name = "watched")
-                       private var watched: Boolean = false
+                       private var genre: String = ""
                        ) {
 
     @PrimaryKey(autoGenerate = true)
     private var id: Long = 0
+
+    @ColumnInfo(name = "watched")
+    private var watched: Boolean = false
 
     fun getId(): Long {
         return id

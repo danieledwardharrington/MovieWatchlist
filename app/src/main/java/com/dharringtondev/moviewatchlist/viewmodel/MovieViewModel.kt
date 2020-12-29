@@ -5,10 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dharringtondev.moviewatchlist.persistence.MovieEntity
 import com.dharringtondev.moviewatchlist.persistence.MovieRepository
+import com.dharringtondev.moviewatchlist.remote.MovieModel
 
 class MovieViewModel(application: Application): ViewModel() {
 
     private val movieRepository = MovieRepository(application)
+    private var movie = MovieEntity()
 
     fun insert(movieEntity: MovieEntity) {
         movieRepository.insert(movieEntity)
@@ -35,6 +37,14 @@ class MovieViewModel(application: Application): ViewModel() {
         movieRepository.getAllWatchedMovies()
     }
 
+    fun getRemoteMovies(filter: String) {
+        movieRepository.getRemoteMovies(filter)
+    }
+
+    fun deleteAllMovies() {
+        movieRepository.deleteAllMovies()
+    }
+
     override fun onCleared() {
         movieRepository.getCompositeDisposable().clear()
     }
@@ -45,6 +55,22 @@ class MovieViewModel(application: Application): ViewModel() {
 
     fun getWatchedMoviesList(): MutableLiveData<List<MovieEntity>>{
         return movieRepository.getWatchedMoviesLiveData()
+    }
+
+    fun getRemoteMoviesList(): MutableLiveData<MovieModel> {
+        return movieRepository.getRemoteMoviesLiveData()
+    }
+
+    fun getMovie(): MovieEntity {
+        return movie
+    }
+
+    fun setMovie(newMovie: MovieEntity) {
+        movie = newMovie
+    }
+
+    fun modelToEntity(movieModel: MovieModel): MovieEntity {
+        return movieRepository.modelToEntity(movieModel)
     }
 
 }

@@ -1,4 +1,4 @@
-package com.dharringtondev.moviewatchlist.ui
+package com.dharringtondev.moviewatchlist.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

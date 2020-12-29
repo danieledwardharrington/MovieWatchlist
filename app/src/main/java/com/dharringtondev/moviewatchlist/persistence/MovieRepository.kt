@@ -3,6 +3,8 @@ package com.dharringtondev.moviewatchlist.persistence
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.dharringtondev.moviewatchlist.remote.MovieModel
+import com.dharringtondev.moviewatchlist.remote.OmdbService
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -16,6 +18,7 @@ class MovieRepository(application: Application) {
 
     private var watchedMoviesLiveData = MutableLiveData<List<MovieEntity>>()
     private var movieWatchlistLiveData = MutableLiveData<List<MovieEntity>>()
+    private var remoteMoviesLiveData = MutableLiveData<MovieModel>()
 
     fun insert(movieEntity: MovieEntity) {
         movieDao.insert(movieEntity).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
@@ -85,6 +88,31 @@ class MovieRepository(application: Application) {
 
     fun getWatchedMoviesLiveData(): MutableLiveData<List<MovieEntity>> {
         return watchedMoviesLiveData
+    }
+
+    fun getRemoteMovies(filter: String) {
+        Log.d(TAG, "getRemoteMovies")
+        OmdbService.create().getRemoteMovies(filter).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+            {
+                if(it != null) {
+                    remoteMoviesLiveData.postValue(it)
+                }
+            },
+            {
+                Log.e(TAG, it.toString())
+            }
+        ).let {
+            compositeDisposable.add(it)
+        }
+    }
+
+    fun getRemoteMoviesLiveData(): MutableLiveData<MovieModel> {
+        return remoteMoviesLiveData
+    }
+
+    fun modelToEntity(movieModel: MovieModel): MovieEntity {
+        return MovieEntity(movieModel.getImdbId(), movieModel.getTitle(), movieModel.getYear(), movieModel.getDirector(), movieModel.getWriter(), movieModel.getActors(), movieModel.getAwards(),
+                movieModel.getPlot(), movieModel.getLanguage(), movieModel.getCountry(), movieModel.getImdbRating(), movieModel.getPosterUrl(), movieModel.getAgeRating(), movieModel.getRuntime(), movieModel.getGenre())
     }
 
 }

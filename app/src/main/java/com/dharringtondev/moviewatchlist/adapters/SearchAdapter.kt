@@ -10,12 +10,22 @@ import com.bumptech.glide.Glide
 import com.dharringtondev.moviewatchlist.R
 import com.dharringtondev.moviewatchlist.databinding.CardViewMovieBinding
 import com.dharringtondev.moviewatchlist.persistence.MovieEntity
+import com.dharringtondev.moviewatchlist.remote.MovieModel
 
 class SearchAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TAG = "SearchAdapter"
 
-    private var movieList = ArrayList<MovieEntity>()
+    private var movieList = ArrayList<MovieModel>()
+    private lateinit var clickedListener: OnMovieClickedListener
+
+    interface OnMovieClickedListener {
+        fun onMovieClicked(movie: MovieModel)
+    }
+
+    fun setMovieClickedListener(newListener: OnMovieClickedListener) {
+        clickedListener = newListener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         Log.d(TAG, "onCreateViewHolder")
@@ -29,6 +39,10 @@ class SearchAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         when (holder) {
             is SearchViewHolder -> {
                 holder.bind(movieList[position])
+                holder.itemView.setOnClickListener {
+                    Log.d(TAG, "Movie clicked")
+                    clickedListener.onMovieClicked(movieList[position])
+                }
             }
         }
     }
@@ -38,9 +52,20 @@ class SearchAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return movieList.size
     }
 
-    private fun submitList(newList: ArrayList<MovieEntity>) {
+    fun submitList(newList: ArrayList<MovieModel>) {
         Log.d(TAG, "submitList; newList length = ${newList.size}")
         movieList = newList
+    }
+
+    private fun add(newMovie: MovieModel) {
+        movieList.add(newMovie)
+        notifyDataSetChanged()
+    }
+
+    private fun removeAt(position: Int) {
+        movieList.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, movieList.size)
     }
 
     class SearchViewHolder(itemBinding: CardViewMovieBinding, parentContext: Context): RecyclerView.ViewHolder(itemBinding.root) {
@@ -54,19 +79,16 @@ class SearchAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val watchedTV = itemBinding.watchedTv
         private val posterIV = itemBinding.posterIv
 
-        fun bind(movieEntity: MovieEntity) {
+        fun bind(movieModel: MovieModel) {
             Log.d(TAG, "BIND")
-            titleTV.text = movieEntity.getTitle()
-            yearTV.text = movieEntity.getYear()
-            directorTV.text = movieEntity.getDirector()
-            startsTV.text = movieEntity.getActors()
-            if (movieEntity.getWatched()) {
-                watchedTV.visibility = View.VISIBLE
-            }
+            titleTV.text = movieModel.getTitle()
+            yearTV.text = movieModel.getYear()
+            directorTV.text = movieModel.getDirector()
+            startsTV.text = movieModel.getActors()
 
             //loading poster with Glide
             Glide.with(context)
-                .load(movieEntity.getPosterUrl())
+                .load(movieModel.getPosterUrl())
                 .placeholder(R.drawable.ic_poster_placeholder)
                 .error(R.drawable.ic_error)
                 .centerCrop()

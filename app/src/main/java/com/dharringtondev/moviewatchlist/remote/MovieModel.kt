@@ -56,6 +56,14 @@ class MovieModel {
     @Expose
     private var ageRating: String = ""
 
+    @SerializedName("Runtime")
+    @Expose
+    private var runtime: String = ""
+
+    @SerializedName("Genre")
+    @Expose
+    private var genre: String = ""
+
     fun getImdbId(): String {
         return imdbId
     }
@@ -158,6 +166,22 @@ class MovieModel {
 
     fun setAgeRating(newRating: String) {
         ageRating = newRating
+    }
+
+    fun setRuntime(newRuntime: String) {
+        runtime = newRuntime
+    }
+
+    fun getRuntime(): String {
+        return runtime
+    }
+
+    fun setGenre(newGenre: String) {
+        genre = newGenre
+    }
+
+    fun getGenre(): String {
+        return genre
     }
 
 }

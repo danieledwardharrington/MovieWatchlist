@@ -7,22 +7,34 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.dharringtondev.moviewatchlist.ui.SearchFragment"
+        android:name="com.dharringtondev.moviewatchlist.ui.fragments.SearchFragment"
         android:label="Search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_fullMovieDialog"
+            app:destination="@id/fullMovieDialog" />
+    </fragment>
     <fragment
         android:id="@+id/watchlistFragment"
-        android:name="com.dharringtondev.moviewatchlist.ui.WatchlistFragment"
+        android:name="com.dharringtondev.moviewatchlist.ui.fragments.WatchlistFragment"
         android:label="Watchlist"
-        tools:layout="@layout/fragment_watchlist" />
+        tools:layout="@layout/fragment_watchlist" >
+        <action
+            android:id="@+id/action_watchlistFragment_to_fullMovieDialog"
+            app:destination="@id/fullMovieDialog" />
+    </fragment>
     <fragment
         android:id="@+id/watchedFragment"
-        android:name="com.dharringtondev.moviewatchlist.ui.WatchedFragment"
+        android:name="com.dharringtondev.moviewatchlist.ui.fragments.WatchedFragment"
         android:label="Watched"
-        tools:layout="@layout/fragment_watched" />
+        tools:layout="@layout/fragment_watched" >
+        <action
+            android:id="@+id/action_watchedFragment_to_fullMovieDialog"
+            app:destination="@id/fullMovieDialog" />
+    </fragment>
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="com.dharringtondev.moviewatchlist.ui.AboutFragment"
+        android:name="com.dharringtondev.moviewatchlist.ui.fragments.AboutFragment"
         android:label="About"
         tools:layout="@layout/fragment_about" >
         <action
@@ -34,12 +46,17 @@
     </fragment>
     <fragment
         android:id="@+id/librariesFragment"
-        android:name="com.dharringtondev.moviewatchlist.ui.LibrariesFragment"
+        android:name="com.dharringtondev.moviewatchlist.ui.fragments.LibrariesFragment"
         android:label="fragment_libraries"
         tools:layout="@layout/fragment_libraries" />
     <fragment
         android:id="@+id/coffeeFragment"
-        android:name="com.dharringtondev.moviewatchlist.ui.CoffeeFragment"
+        android:name="com.dharringtondev.moviewatchlist.ui.fragments.CoffeeFragment"
         android:label="fragment_coffee"
         tools:layout="@layout/fragment_coffee" />
+    <dialog
+        android:id="@+id/fullMovieDialog"
+        android:name="com.dharringtondev.moviewatchlist.ui.dialogfragments.FullMovieDialog"
+        android:label="alert_dialog_full_movie"
+        tools:layout="@layout/alert_dialog_full_movie" />
 </navigation>

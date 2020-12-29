@@ -15,6 +15,15 @@ class MovieAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TAG = "MovieAdapter"
 
     private var movieList = ArrayList<MovieEntity>()
+    private lateinit var clickedListener: OnMovieClickedListener
+
+    interface OnMovieClickedListener {
+        fun onMovieClicked(movie: MovieEntity)
+    }
+
+    fun setMovieClickedListener(newListener: OnMovieClickedListener) {
+        clickedListener = newListener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         Log.d(TAG, "onCreateViewHolder")
@@ -28,6 +37,10 @@ class MovieAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         when (holder) {
             is MovieViewHolder -> {
                 holder.bind(movieList[position])
+                holder.itemView.setOnClickListener {
+                    Log.d(TAG, "Movie clicked")
+                    clickedListener.onMovieClicked(movieList[position])
+                }
             }
         }
     }
@@ -40,6 +53,17 @@ class MovieAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private fun submitList(newList: ArrayList<MovieEntity>) {
         Log.d(TAG, "submitList; newList length = ${newList.size}")
         movieList = newList
+    }
+
+    private fun add(newMovie: MovieEntity) {
+        movieList.add(newMovie)
+        notifyDataSetChanged()
+    }
+
+    private fun removeAt(position: Int) {
+        movieList.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, movieList.size)
     }
 
     class MovieViewHolder(itemBinding: CardViewMovieBinding, parentContext: Context): RecyclerView.ViewHolder(itemBinding.root) {
