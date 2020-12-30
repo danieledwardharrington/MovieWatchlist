@@ -71,9 +71,8 @@ class SearchAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun removeAll() {
-        val size = movieList.size
         movieList.clear()
-        notifyItemRangeChanged(0, size)
+        notifyDataSetChanged()
     }
 
     fun getSearchedList(): ArrayList<MovieModel> {

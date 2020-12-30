@@ -102,11 +102,12 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                Log.d(TAG, "onQueryTextChange; newText = $newText")
                 if(TextUtils.isEmpty(newText)) {
                     searchAdapter.removeAll()
+                } else {
+                    movieViewModel.getRemoteMovies(newText!!)
                 }
-                Log.d(TAG, "onQueryTextChange; newText = $newText")
-                movieViewModel.getRemoteMovies(newText!!)
                 return false
             }
         })
