@@ -60,10 +60,14 @@ class MovieAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    private fun removeAt(position: Int) {
+    fun removeAt(position: Int) {
         movieList.removeAt(position)
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, movieList.size)
+    }
+
+    fun getMovieList(): ArrayList<MovieEntity> {
+        return movieList
     }
 
     class MovieViewHolder(itemBinding: CardViewMovieBinding, parentContext: Context): RecyclerView.ViewHolder(itemBinding.root) {

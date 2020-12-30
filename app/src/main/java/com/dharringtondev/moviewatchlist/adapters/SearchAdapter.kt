@@ -62,7 +62,7 @@ class SearchAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    private fun removeAt(position: Int) {
+    fun removeAt(position: Int) {
         movieList.removeAt(position)
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, movieList.size)
@@ -72,6 +72,10 @@ class SearchAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val size = movieList.size
         movieList.clear()
         notifyItemRangeChanged(0, size)
+    }
+
+    fun getSearchedList(): ArrayList<MovieModel> {
+        return movieList
     }
 
     class SearchViewHolder(itemBinding: CardViewMovieBinding, parentContext: Context): RecyclerView.ViewHolder(itemBinding.root) {

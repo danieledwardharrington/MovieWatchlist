@@ -10,7 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dharringtondev.moviewatchlist.R
 import com.dharringtondev.moviewatchlist.adapters.SearchAdapter
 import com.dharringtondev.moviewatchlist.databinding.FragmentSearchBinding
@@ -39,13 +41,13 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
     }
 
     private fun initComponents() {
-        initRV()
         initViewModel()
     }
 
     private fun initViewModel() {
         movieViewModel = ViewModelProvider(this, MovieViewModelFactory(requireActivity().application)).get(MovieViewModel::class.java)
         setupSearch()
+        initRV()
         movieViewModel.getRemoteMoviesList().observe(viewLifecycleOwner, Observer {
             if(it != null) {
                 searchedMovies = ArrayList(it)
@@ -61,6 +63,30 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
             adapter = searchAdapter
             searchAdapter.setMovieClickedListener(this@SearchFragment)
         }
+
+        val itemRight = object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val movieModel = searchAdapter.getSearchedList()[viewHolder.adapterPosition]
+                movieViewModel.getRemoteMovieById(movieModel.getImdbId())
+                var movie = MovieModel()
+                movieViewModel.getRemoteMovieByIdLiveData().observe(viewLifecycleOwner, Observer {
+                    movie = it
+                    movieViewModel.insert(movieViewModel.modelToEntity(movie))
+                    searchAdapter.removeAt(viewHolder.adapterPosition)
+                })
+            }
+        }
+
+        val itemTouchHelperRight = ItemTouchHelper(itemRight)
+        itemTouchHelperRight.attachToRecyclerView(binding.resultsRv)
     }
 
     private fun setupSearch () {
