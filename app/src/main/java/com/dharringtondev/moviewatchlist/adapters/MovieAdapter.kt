@@ -50,7 +50,7 @@ class MovieAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return movieList.size
     }
 
-    private fun submitList(newList: ArrayList<MovieEntity>) {
+    fun submitList(newList: ArrayList<MovieEntity>) {
         Log.d(TAG, "submitList; newList length = ${newList.size}")
         movieList = newList
     }
