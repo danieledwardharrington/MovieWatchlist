@@ -2,8 +2,6 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_2sdp"
-    android:layout_marginBottom="@dimen/_2sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:elevation="@dimen/_4sdp">
 
@@ -87,66 +85,6 @@
             android:textSize="@dimen/_16sdp"
             android:text="2019"
             android:ellipsize="end"/>
-
-        <TextView
-            android:id="@+id/director_title_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/year_title_tv"
-            app:layout_constraintStart_toStartOf="@id/movie_title_tv"
-            android:fontFamily="sans-serif"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_16sdp"
-            android:text="Director: "/>
-
-
-        <TextView
-            android:id="@+id/director_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/year_title_tv"
-            app:layout_constraintStart_toEndOf="@id/director_title_tv"
-            app:layout_constraintEnd_toEndOf="@id/end_guideline"
-            android:fontFamily="sans-serif"
-            android:textSize="@dimen/_16sdp"
-            android:text="Bong Joon Ho"
-            android:ellipsize="end"/>
-
-        <TextView
-            android:id="@+id/stars_title_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/director_tv"
-            app:layout_constraintStart_toStartOf="@id/movie_title_tv"
-            android:fontFamily="sans-serif"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_16sdp"
-            android:text="Stars: "/>
-
-        <TextView
-            android:id="@+id/stars_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/director_tv"
-            app:layout_constraintStart_toEndOf="@id/stars_title_tv"
-            app:layout_constraintEnd_toEndOf="@id/end_guideline"
-            android:fontFamily="sans-serif"
-            android:textSize="@dimen/_16sdp"
-            android:text="Song Kang-Ho, Lee Sun-kyun, Cho Yeo-jeong"
-            android:ellipsize="end"/>
-
-        <TextView
-            android:id="@+id/watched_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/stars_tv"
-            app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
-            app:layout_constraintEnd_toEndOf="@id/end_guideline"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:fontFamily="sans-serif"
-            android:textStyle="italic"
-            android:textSize="@dimen/_16sdp"
-            android:text="Watched"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

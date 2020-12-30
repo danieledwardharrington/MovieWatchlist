@@ -11,8 +11,8 @@ class AboutAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TAG = "AboutAdapter"
 
-    private val aboutList = arrayListOf<String>("Buy Me Coffee", "Rate", "Share", "Libraries")
-    private val iconList = arrayListOf<Int>(R.drawable.ic_coffee, R.drawable.ic_rate, R.drawable.ic_share, R.drawable.ic_libraries)
+    private val aboutList = arrayListOf("Buy Me Coffee", "Rate", "Share", "Libraries", "Contact")
+    private val iconList = arrayListOf(R.drawable.ic_coffee, R.drawable.ic_rate, R.drawable.ic_share, R.drawable.ic_libraries, R.drawable.ic_contact)
     private lateinit var clickedListener: OnItemClickedListener
 
     interface OnItemClickedListener {
@@ -25,12 +25,12 @@ class AboutAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemBinding = CardViewAboutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return AboutAdapter.AboutViewHolder(itemBinding)
+        return AboutViewHolder(itemBinding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is AboutAdapter.AboutViewHolder -> {
+            is AboutViewHolder -> {
                 holder.bind(aboutList[position], iconList[position])
                 holder.itemView.setOnClickListener {
                     Log.d(TAG, "item clicked")

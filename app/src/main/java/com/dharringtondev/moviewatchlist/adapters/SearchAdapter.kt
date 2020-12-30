@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dharringtondev.moviewatchlist.R
 import com.dharringtondev.moviewatchlist.databinding.CardViewMovieBinding
+import com.dharringtondev.moviewatchlist.databinding.CardViewSearchedMovieBinding
 import com.dharringtondev.moviewatchlist.persistence.MovieEntity
 import com.dharringtondev.moviewatchlist.remote.MovieModel
 
@@ -29,7 +30,7 @@ class SearchAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         Log.d(TAG, "onCreateViewHolder")
-        val itemBinding = CardViewMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val itemBinding = CardViewSearchedMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val context = parent.context
         return SearchViewHolder(itemBinding, context)
     }
@@ -55,6 +56,7 @@ class SearchAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun submitList(newList: ArrayList<MovieModel>) {
         Log.d(TAG, "submitList; newList length = ${newList.size}")
         movieList = newList
+        notifyDataSetChanged()
     }
 
     private fun add(newMovie: MovieModel) {
@@ -78,23 +80,18 @@ class SearchAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return movieList
     }
 
-    class SearchViewHolder(itemBinding: CardViewMovieBinding, parentContext: Context): RecyclerView.ViewHolder(itemBinding.root) {
+    class SearchViewHolder(itemBinding: CardViewSearchedMovieBinding, parentContext: Context): RecyclerView.ViewHolder(itemBinding.root) {
         private val TAG = "SearchViewHolder"
 
         private val context = parentContext
         private val titleTV = itemBinding.movieTitleTv
         private val yearTV = itemBinding.yearTv
-        private val directorTV = itemBinding.directorTv
-        private val startsTV = itemBinding.starsTv
-        private val watchedTV = itemBinding.watchedTv
         private val posterIV = itemBinding.posterIv
 
         fun bind(movieModel: MovieModel) {
             Log.d(TAG, "BIND")
             titleTV.text = movieModel.getTitle()
             yearTV.text = movieModel.getYear()
-            directorTV.text = movieModel.getDirector()
-            startsTV.text = movieModel.getActors()
 
             //loading poster with Glide
             Glide.with(context)

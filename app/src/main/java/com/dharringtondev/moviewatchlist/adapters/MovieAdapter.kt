@@ -53,6 +53,7 @@ class MovieAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun submitList(newList: ArrayList<MovieEntity>) {
         Log.d(TAG, "submitList; newList length = ${newList.size}")
         movieList = newList
+        notifyDataSetChanged()
     }
 
     private fun add(newMovie: MovieEntity) {

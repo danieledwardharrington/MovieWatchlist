@@ -1,5 +1,7 @@
 package com.dharringtondev.moviewatchlist.ui.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -62,6 +64,9 @@ class AboutFragment: Fragment(), AboutAdapter.OnItemClickedListener {
             "Libraries" -> {
                 navController.navigate(R.id.librariesFragment)
             }
+            "Contact" -> {
+                goToUrl(resources.getString(R.string.google_form_url))
+            }
         }
     }
 
@@ -82,5 +87,11 @@ class AboutFragment: Fragment(), AboutAdapter.OnItemClickedListener {
                 // There was some problem, continue regardless of the result.
             }
         }
+    }
+
+    private fun goToUrl(url: String) {
+        Log.d(TAG, "goToUrl; url = $url")
+        val uri = Uri.parse(url)
+        startActivity(Intent(Intent.ACTION_VIEW, uri))
     }
 }

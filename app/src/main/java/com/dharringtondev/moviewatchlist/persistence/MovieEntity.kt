@@ -2,9 +2,10 @@ package com.dharringtondev.moviewatchlist.persistence
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "movie_table")
+@Entity(tableName = "movie_table", indices = [Index(value = arrayOf("imdb_id"), unique = true)])
 data class MovieEntity(@ColumnInfo(name = "imdb_id")
                        private var imdbId: String = "",
                        @ColumnInfo(name = "title")

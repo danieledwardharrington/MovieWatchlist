@@ -1,10 +1,12 @@
 package com.dharringtondev.moviewatchlist.ui.fragments
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -30,6 +32,7 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
     private lateinit var movieViewModel: MovieViewModel
     private val searchAdapter = SearchAdapter()
     private var searchedMovies = ArrayList<MovieModel>()
+    private var allMovies = ArrayList<MovieEntity>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
@@ -45,11 +48,16 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
         movieViewModel = ViewModelProvider(this, MovieViewModelFactory(requireActivity().application)).get(MovieViewModel::class.java)
         setupSearch()
         initRV()
+        movieViewModel.getAllMovies()
         movieViewModel.getRemoteMoviesList().observe(viewLifecycleOwner, Observer {
             if(it != null) {
                 searchedMovies = ArrayList(it)
                 searchAdapter.submitList(searchedMovies)
             }
+        })
+
+        movieViewModel.getAllMoviesList().observe(viewLifecycleOwner, Observer {
+            allMovies = ArrayList(it)
         })
     }
 
@@ -63,11 +71,7 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
 
         //swiping right to add to watchlist
         val itemRight = object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
                 return false
             }
 
@@ -77,7 +81,9 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
                 var movie = MovieModel()
                 movieViewModel.getRemoteMovieByIdLiveData().observe(viewLifecycleOwner, Observer {
                     movie = it
-                    movieViewModel.insert(movieViewModel.modelToEntity(movie))
+                    val movieEntity = movieViewModel.modelToEntity(movie)
+                    movieViewModel.insert(movieEntity)
+                    showShortToast("Movie added to watchlist")
                 })
                 searchAdapter.removeAt(viewHolder.adapterPosition)
             }
@@ -96,6 +102,9 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                if(TextUtils.isEmpty(newText)) {
+                    searchAdapter.removeAll()
+                }
                 Log.d(TAG, "onQueryTextChange; newText = $newText")
                 movieViewModel.getRemoteMovies(newText!!)
                 return false
@@ -112,5 +121,9 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun showShortToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

@@ -16,6 +16,7 @@ class MovieRepository(application: Application) {
     private val movieDao: MovieDao = database!!.watchlistDao()
     private var compositeDisposable = CompositeDisposable()
 
+    private var allMoviesLiveData = MutableLiveData<List<MovieEntity>>()
     private var watchedMoviesLiveData = MutableLiveData<List<MovieEntity>>()
     private var movieWatchlistLiveData = MutableLiveData<List<MovieEntity>>()
     private var remoteMoviesLiveData = MutableLiveData<List<MovieModel>>()
@@ -54,6 +55,7 @@ class MovieRepository(application: Application) {
             {
                 if (!it.isNullOrEmpty()) {
                     watchedMoviesLiveData.postValue(it)
+                    allMoviesLiveData.postValue(it)
                 }
             },
             {Log.d(TAG, it.toString())}
@@ -67,6 +69,7 @@ class MovieRepository(application: Application) {
             {
                 if (!it.isNullOrEmpty()) {
                     movieWatchlistLiveData.postValue(it)
+                    allMoviesLiveData.postValue(it)
                 }
             },
             {Log.d(TAG, it.toString())}
@@ -92,6 +95,10 @@ class MovieRepository(application: Application) {
 
     fun getWatchedMoviesLiveData(): MutableLiveData<List<MovieEntity>> {
         return watchedMoviesLiveData
+    }
+
+    fun getAllMoviesLiveData(): MutableLiveData<List<MovieEntity>> {
+        return allMoviesLiveData
     }
 
     fun getRemoteMovies(filter: String) {

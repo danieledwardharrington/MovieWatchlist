@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -43,6 +44,7 @@ class WatchlistFragment: Fragment(), MovieAdapter.OnMovieClickedListener {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             adapter = watchlistAdapter
+            watchlistAdapter.setMovieClickedListener(this@WatchlistFragment)
         }
 
         /*
@@ -51,11 +53,7 @@ class WatchlistFragment: Fragment(), MovieAdapter.OnMovieClickedListener {
         Swipe right: Move the movie to watched, a separate list, and remove it from watchlist.
          */
         val itemLeft = object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
                 return false
             }
 
@@ -63,15 +61,12 @@ class WatchlistFragment: Fragment(), MovieAdapter.OnMovieClickedListener {
                 val movieEntity = watchlistAdapter.getMovieList()[viewHolder.adapterPosition]
                 movieViewModel.delete(movieEntity)
                 watchlistAdapter.removeAt(viewHolder.adapterPosition)
+                showShortToast("Movie deleted from watchlist")
             }
         }
 
         val itemRight = object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
                 return false
             }
 
@@ -80,6 +75,7 @@ class WatchlistFragment: Fragment(), MovieAdapter.OnMovieClickedListener {
                 movieEntity.setWatched(true)
                 movieViewModel.update(movieEntity)
                 watchlistAdapter.removeAt(viewHolder.adapterPosition)
+                showShortToast("Movie marked as watched")
             }
         }
 
@@ -110,5 +106,14 @@ class WatchlistFragment: Fragment(), MovieAdapter.OnMovieClickedListener {
     override fun onMovieClicked(movie: MovieEntity) {
         val action = WatchlistFragmentDirections.actionWatchlistFragmentToFullMovieDialog(movie.getImdbId())
         findNavController().navigate(action)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        movieViewModel.getAllMovies()
+    }
+
+    private fun showShortToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

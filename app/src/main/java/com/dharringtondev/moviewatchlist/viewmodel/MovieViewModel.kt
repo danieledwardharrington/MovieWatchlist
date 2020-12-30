@@ -52,8 +52,12 @@ class MovieViewModel(application: Application): ViewModel() {
         return movieRepository.getMovieWatchlistLiveData()
     }
 
-    fun getWatchedMoviesList(): MutableLiveData<List<MovieEntity>>{
+    fun getWatchedMoviesList(): MutableLiveData<List<MovieEntity>> {
         return movieRepository.getWatchedMoviesLiveData()
+    }
+
+    fun getAllMoviesList(): MutableLiveData<List<MovieEntity>> {
+        return movieRepository.getAllMoviesLiveData()
     }
 
     fun getRemoteMoviesList(): MutableLiveData<List<MovieModel>> {
