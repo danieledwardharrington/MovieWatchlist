@@ -46,6 +46,9 @@ class MovieRepository(application: Application) {
         ).let { compositeDisposable.add(it) }
     }
 
+    /*
+    All movies are saved to the table with a "watched" field. We get all movies in the fragment and then narrow it to watched or unwatched (watchlist)
+     */
     fun getAllWatchedMovies() {
         movieDao.getAllWatchedMovies().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
             {
@@ -130,6 +133,7 @@ class MovieRepository(application: Application) {
         return remoteMoviesLiveData
     }
 
+    //a function to cast the MovieModel, object reutrned from OMDb, to MovieEntity, object stored in the database
     fun modelToEntity(movieModel: MovieModel): MovieEntity {
         return MovieEntity(movieModel.getImdbId(), movieModel.getTitle(), movieModel.getYear(), movieModel.getDirector(), movieModel.getWriter(), movieModel.getActors(), movieModel.getAwards(),
                 movieModel.getPlot(), movieModel.getLanguage(), movieModel.getCountry(), movieModel.getImdbRating(), movieModel.getPosterUrl(), movieModel.getAgeRating(), movieModel.getRuntime(), movieModel.getGenre())

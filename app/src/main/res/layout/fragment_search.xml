@@ -41,6 +41,7 @@
         app:queryHint="Search by title"
         app:queryBackground="@android:color/transparent"
         app:defaultQueryHint="Search by title"
-        app:iconifiedByDefault="false" />
+        app:iconifiedByDefault="false"
+        android:theme="@style/BlueCursor"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

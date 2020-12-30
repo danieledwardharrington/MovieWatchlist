@@ -46,6 +46,11 @@ class WatchedFragment: Fragment(), MovieAdapter.OnMovieClickedListener {
             adapter = watchedAdapter
         }
 
+        /*
+        Swipe actions
+        Swipe left: Delete from the list. Mostly for if it's here by mistake.
+        Swipe right: Put back on watchlist.
+         */
         val itemLeft = object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -96,6 +101,7 @@ class WatchedFragment: Fragment(), MovieAdapter.OnMovieClickedListener {
         })
     }
 
+    //laucnhing dialog with more details about the movie
     override fun onMovieClicked(movie: MovieEntity) {
         val action = WatchedFragmentDirections.actionWatchedFragmentToFullMovieDialog(movie.getImdbId())
         findNavController().navigate(action)

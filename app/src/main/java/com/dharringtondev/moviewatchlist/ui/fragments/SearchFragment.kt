@@ -30,9 +30,6 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
     private lateinit var movieViewModel: MovieViewModel
     private val searchAdapter = SearchAdapter()
     private var searchedMovies = ArrayList<MovieModel>()
-    private lateinit var searchedMovie: MovieModel
-    private var watchedMovies = ArrayList<MovieEntity>()
-    private var movieWatchlist = ArrayList<MovieEntity>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
@@ -64,6 +61,7 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
             searchAdapter.setMovieClickedListener(this@SearchFragment)
         }
 
+        //swiping right to add to watchlist
         val itemRight = object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -80,8 +78,8 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
                 movieViewModel.getRemoteMovieByIdLiveData().observe(viewLifecycleOwner, Observer {
                     movie = it
                     movieViewModel.insert(movieViewModel.modelToEntity(movie))
-                    searchAdapter.removeAt(viewHolder.adapterPosition)
                 })
+                searchAdapter.removeAt(viewHolder.adapterPosition)
             }
         }
 
@@ -105,6 +103,7 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
         })
     }
 
+    //when the user clicks a movie card, a dialog will appear to show more details
     override fun onMovieClicked(movie: MovieModel) {
         val action = SearchFragmentDirections.actionSearchFragmentToFullMovieDialog(movie.getImdbId())
         findNavController().navigate(action)

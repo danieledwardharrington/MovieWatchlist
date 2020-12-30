@@ -25,4 +25,8 @@
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
+    <style name="BlueCursor" parent="Widget.AppCompat.SearchView">
+        <item name="colorControlActivated">@color/google_blue</item>
+    </style>
+
 </resources>

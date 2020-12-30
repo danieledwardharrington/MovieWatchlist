@@ -15,6 +15,12 @@ interface OmdbService {
     @GET("?apikey=1fa7ed15")
     fun getRemoteMovies(@Query("s") title: String, @Query("page") page: String): Observable<OmdbResponse>
 
+
+    /*
+    The OMDb API only returns a limited amount of information when searching for movies, so this function is
+    to take the IMDb ID number from the returned search and then use it to get a more detailed object for
+    the dialog, which displays detailed information about the movie
+     */
     @GET("?apikey=1fa7ed15")
     fun getMovieById(@Query("i") imdbId: String): Observable<MovieModel>
 

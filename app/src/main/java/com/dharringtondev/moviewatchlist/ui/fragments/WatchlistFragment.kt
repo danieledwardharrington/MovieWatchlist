@@ -45,6 +45,11 @@ class WatchlistFragment: Fragment(), MovieAdapter.OnMovieClickedListener {
             adapter = watchlistAdapter
         }
 
+        /*
+        Swiping
+        Swipe left: Delete the movie. Meaning the user no longer wants to watch it.
+        Swipe right: Move the movie to watched, a separate list, and remove it from watchlist.
+         */
         val itemLeft = object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -101,6 +106,7 @@ class WatchlistFragment: Fragment(), MovieAdapter.OnMovieClickedListener {
         _binding = null
     }
 
+    //launching dialog with details about the movie
     override fun onMovieClicked(movie: MovieEntity) {
         val action = WatchlistFragmentDirections.actionWatchlistFragmentToFullMovieDialog(movie.getImdbId())
         findNavController().navigate(action)

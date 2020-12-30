@@ -43,6 +43,11 @@ class FullMovieDialog: DialogFragment() {
         movieViewModel = ViewModelProvider(this, MovieViewModelFactory(requireActivity().application)).get(MovieViewModel::class.java)
         imdbId = fmdArgs.imdbId
         Log.d(TAG, "initComponents; imdbId: $imdbId")
+
+        /*
+        Since the search from the API returns very limited information about the movie, we're grabbing the IMDb ID from that search
+        and using it get an object with more details for the purposes of this dialog.
+         */
         movieViewModel.getRemoteMovieById(imdbId)
         movieViewModel.getRemoteMovieByIdLiveData().observe(this, Observer {
             Log.d(TAG, "observe; ${it.getTitle()}")
@@ -50,6 +55,7 @@ class FullMovieDialog: DialogFragment() {
         })
     }
 
+    //populating movie information
     private fun setupText(movie: MovieModel) {
         Log.d(TAG, "setupText")
         binding.apply {
@@ -65,12 +71,22 @@ class FullMovieDialog: DialogFragment() {
             awardsTv.text = movie.getAwards()
             countryTv.text = movie.getCountry()
             languageTv.text = movie.getLanguage()
-            Glide.with(requireContext())
-                .load(movie.getPosterUrl())
-                .placeholder(R.drawable.ic_poster_placeholder)
-                .error(R.drawable.ic_error)
-                .centerCrop()
-                .into(posterIv)
+
+            if(movie.getPosterUrl().isEmpty()) {
+                Glide.with(requireContext())
+                    .load(R.drawable.ic_poster_placeholder)
+                    .placeholder(R.drawable.ic_poster_placeholder)
+                    .error(R.drawable.ic_error)
+                    .centerCrop()
+                    .into(posterIv)
+            } else {
+                Glide.with(requireContext())
+                    .load(movie.getPosterUrl())
+                    .placeholder(R.drawable.ic_poster_placeholder)
+                    .error(R.drawable.ic_error)
+                    .centerCrop()
+                    .into(posterIv)
+            }
         }
     }
 
