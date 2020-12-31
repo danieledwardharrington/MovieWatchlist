@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.dialogfragments.TutorialDialog">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/end_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/_4sdp"
+        app:layout_constraintGuide_percent="0.98"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/start_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.02"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/top_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.02"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottom_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.98"/>
+
+    <TextView
+        android:id="@+id/welcome_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/top_guideline"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:textSize="@dimen/_22sdp"
+        android:textColor="@color/black"
+        android:text="Welcome!"/>
+
+    <TextView
+        android:id="@+id/welcome_extra_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/welcome_tv"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:text="Here's some information to get you started"/>
+
+    <TextView
+        android:id="@+id/first_instruction_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/welcome_extra_tv"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:textSize="@dimen/_14sdp"
+        android:text="@string/first_instruction" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/swipe_right_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/first_instruction_tv"
+        android:layout_marginBottom="@dimen/_8sdp">
+
+        <include layout="@layout/card_view_searched_movie"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+
+        <ImageView
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:src="@drawable/ic_right_arrow"
+            android:elevation="@dimen/_5sdp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/second_instruction_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/swipe_right_layout"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:textSize="@dimen/_14sdp"
+        android:text="@string/second_instruction" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/swipe_left_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/second_instruction_tv"
+        android:layout_marginBottom="@dimen/_8sdp">
+
+        <include layout="@layout/card_view_searched_movie"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+
+        <ImageView
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:src="@drawable/ic_left_arrow"
+            android:elevation="@dimen/_5sdp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/swipe_left_layout"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/black"
+        android:text="@string/third_instruction"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

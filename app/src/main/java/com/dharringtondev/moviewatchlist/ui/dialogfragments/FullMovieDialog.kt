@@ -1,12 +1,10 @@
 package com.dharringtondev.moviewatchlist.ui.dialogfragments
 
-import android.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,7 +12,6 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.dharringtondev.moviewatchlist.R
 import com.dharringtondev.moviewatchlist.databinding.AlertDialogFullMovieBinding
-import com.dharringtondev.moviewatchlist.persistence.MovieEntity
 import com.dharringtondev.moviewatchlist.remote.MovieModel
 import com.dharringtondev.moviewatchlist.viewmodel.MovieViewModel
 import com.dharringtondev.moviewatchlist.viewmodel.MovieViewModelFactory
@@ -32,7 +29,7 @@ class FullMovieDialog: DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         Log.d(TAG, "onCreateDialog")
         _binding = AlertDialogFullMovieBinding.inflate(LayoutInflater.from(context))
-        val builder = AlertDialog.Builder(context)
+        val builder = AlertDialog.Builder(requireContext())
         builder.setView(binding.root).setPositiveButton("Okay") { _, _ -> dismiss() }
         initComponents()
         return builder.create()

@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#ABAAAB</color>
     <color name="google_blue">#3878E5</color>
+    <color name="red">#FF0000</color>
 </resources>

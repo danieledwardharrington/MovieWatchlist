@@ -11,8 +11,8 @@ class AboutAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TAG = "AboutAdapter"
 
-    private val aboutList = arrayListOf("Buy Me Coffee", "Rate", "Share", "Libraries", "Contact")
-    private val iconList = arrayListOf(R.drawable.ic_coffee, R.drawable.ic_rate, R.drawable.ic_share, R.drawable.ic_libraries, R.drawable.ic_contact)
+    private val aboutList = arrayListOf("Buy Me Coffee", "Rate", "Share", "Tutorial", "Libraries", "Contact", "GitHub")
+    private val iconList = arrayListOf(R.drawable.ic_coffee, R.drawable.ic_rate, R.drawable.ic_share, R.drawable.ic_tutorial, R.drawable.ic_libraries, R.drawable.ic_contact, R.drawable.ic_github)
     private lateinit var clickedListener: OnItemClickedListener
 
     interface OnItemClickedListener {

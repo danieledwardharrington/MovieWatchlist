@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_searchFragment_to_fullMovieDialog"
             app:destination="@id/fullMovieDialog" />
+        <action
+            android:id="@+id/action_searchFragment_to_tutorialDialog"
+            app:destination="@id/tutorialDialog" />
     </fragment>
     <fragment
         android:id="@+id/watchlistFragment"
@@ -43,6 +46,9 @@
         <action
             android:id="@+id/action_aboutFragment_to_coffeeFragment"
             app:destination="@id/coffeeFragment" />
+        <action
+            android:id="@+id/action_aboutFragment_to_tutorialDialog"
+            app:destination="@id/tutorialDialog" />
     </fragment>
     <fragment
         android:id="@+id/librariesFragment"
@@ -63,4 +69,9 @@
             android:name="imdbId"
             app:argType="string" />
     </dialog>
+    <fragment
+        android:id="@+id/tutorialDialog"
+        android:name="com.dharringtondev.moviewatchlist.ui.dialogfragments.TutorialDialog"
+        android:label="alert_dialog_tutorial"
+        tools:layout="@layout/alert_dialog_tutorial" />
 </navigation>

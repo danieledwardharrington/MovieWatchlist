@@ -2,4 +2,8 @@
     <string name="app_name">Movie Watchlist</string>
     <string name="omdb_api_key">1fa7ed15</string>
     <string name="google_form_url">https://forms.gle/Hz8pvFd6ATLerN7PA</string>
+    <string name="github_url">https://github.com/danieledwardharrington/MovieWatchlist</string>
+    <string name="first_instruction">From the search screen, swipe the movie to the right to add it to your watchlist. If you\'re on the watchlist, swiping right will mark the movie as watched and move it to your watched list. From the watched list, swiping right will return it to the watchlist.</string>
+    <string name="second_instruction">From either the watchlist or the watched list, swiping left will delete it the movie. Note: From the watchlist, this is NOT the same as marking it as watched and it will not appear in the watched list.</string>
+    <string name="third_instruction">That\'s it! If you need to see this screen again, you can find it in the About tab at the bottom of the screen</string>
 </resources>

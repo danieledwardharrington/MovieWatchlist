@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -67,6 +68,9 @@ class AboutFragment: Fragment(), AboutAdapter.OnItemClickedListener {
             "Contact" -> {
                 goToUrl(resources.getString(R.string.google_form_url))
             }
+            "GitHub" -> {
+                goToUrl(resources.getString(R.string.github_url))
+            }
         }
     }
 
@@ -79,12 +83,10 @@ class AboutFragment: Fragment(), AboutAdapter.OnItemClickedListener {
                 val reviewInfo = request.result
                 val flow = activity?.let { manager.launchReviewFlow(it, reviewInfo) }
                 flow!!.addOnCompleteListener { _ ->
-                    // The flow has finished. The API does not indicate whether the user
-                    // reviewed or not, or even whether the review dialog was shown. Thus, no
-                    // matter the result, we continue our app flow.
                 }
             } else {
-                // There was some problem, continue regardless of the result.
+                Log.e(TAG, "Error with review")
+                showShortToast("Error leaving review")
             }
         }
     }
@@ -93,5 +95,9 @@ class AboutFragment: Fragment(), AboutAdapter.OnItemClickedListener {
         Log.d(TAG, "goToUrl; url = $url")
         val uri = Uri.parse(url)
         startActivity(Intent(Intent.ACTION_VIEW, uri))
+    }
+
+    private fun showShortToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

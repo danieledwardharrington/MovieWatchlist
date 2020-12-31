@@ -14,6 +14,7 @@
         <!-- Customize your theme here. -->
         <item name="windowNoTitle">true</item>
         <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
+        <item name="snackbarStyle">@style/RedSnackBarStyle</item>
     </style>
 
     <style name="MovieSearch" parent="Widget.AppCompat.SearchView">
@@ -27,6 +28,11 @@
 
     <style name="BlueCursor" parent="Widget.AppCompat.SearchView">
         <item name="colorControlActivated">@color/google_blue</item>
+    </style>
+
+    <style name="RedSnackBarStyle" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:backgroundTint">@color/red</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
 </resources>
