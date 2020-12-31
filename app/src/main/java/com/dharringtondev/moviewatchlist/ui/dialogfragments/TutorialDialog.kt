@@ -18,8 +18,8 @@ class TutorialDialog: DialogFragment() {
         Log.d(TAG, "onCreateDialog")
         _binding = AlertDialogTutorialBinding.inflate(LayoutInflater.from(context))
         val builder = AlertDialog.Builder(requireContext())
-        builder.setView(binding.root).setPositiveButton("Let's Go!") {_, _ -> dismiss()}
-        return super.onCreateDialog(savedInstanceState)
+        builder.setView(binding.root).setPositiveButton("Let's Go!") { _, _ -> dismiss() }
+        return builder.create()
     }
 
     override fun onDestroyView() {

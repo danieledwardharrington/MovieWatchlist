@@ -71,6 +71,9 @@ class AboutFragment: Fragment(), AboutAdapter.OnItemClickedListener {
             "GitHub" -> {
                 goToUrl(resources.getString(R.string.github_url))
             }
+            "Tutorial" -> {
+                navController.navigate(R.id.tutorialDialog)
+            }
         }
     }
 
