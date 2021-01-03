@@ -5,4 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class OmdbResponse(@SerializedName("Search")
                         @Expose
-                        val results: List<MovieModel>)
+                        val results: MutableList<MovieModel>,
+                        @SerializedName("totalResults")
+                        @Expose
+                        val totalResults: String)

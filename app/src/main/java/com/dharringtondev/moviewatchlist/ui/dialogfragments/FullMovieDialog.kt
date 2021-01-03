@@ -36,7 +36,6 @@ class FullMovieDialog: DialogFragment() {
     }
 
     private fun initComponents() {
-        Log.d(TAG, "onViewCreated")
         movieViewModel = ViewModelProvider(this, MovieViewModelFactory(requireActivity().application)).get(MovieViewModel::class.java)
         imdbId = fmdArgs.imdbId
         Log.d(TAG, "initComponents; imdbId: $imdbId")

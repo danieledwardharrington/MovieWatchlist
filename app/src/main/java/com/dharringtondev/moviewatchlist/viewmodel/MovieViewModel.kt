@@ -1,15 +1,19 @@
 package com.dharringtondev.moviewatchlist.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dharringtondev.moviewatchlist.persistence.MovieEntity
-import com.dharringtondev.moviewatchlist.persistence.MovieRepository
+import com.dharringtondev.moviewatchlist.repository.MovieRepository
 import com.dharringtondev.moviewatchlist.remote.MovieModel
 
 class MovieViewModel(application: Application): ViewModel() {
+    private val TAG = "MovieViewModel"
 
     private val movieRepository = MovieRepository(application)
+
+    val tutorialSeenLD = MutableLiveData<Boolean>()
 
     fun insert(movieEntity: MovieEntity) {
         movieRepository.insert(movieEntity)
@@ -74,6 +78,11 @@ class MovieViewModel(application: Application): ViewModel() {
 
     fun modelToEntity(movieModel: MovieModel): MovieEntity {
         return movieRepository.modelToEntity(movieModel)
+    }
+
+    fun setSeen(seen: Boolean) {
+        Log.d(TAG, "setSeen; seen = $seen")
+        tutorialSeenLD.value = seen
     }
 
 }

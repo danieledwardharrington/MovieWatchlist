@@ -13,7 +13,10 @@ import retrofit2.http.Query
 interface OmdbService {
 
     @GET("?apikey=1fa7ed15")
-    fun getRemoteMovies(@Query("s") title: String, @Query("page") page: String): Observable<OmdbResponse>
+    fun getRemoteMovies(@Query("s") title: String): Observable<OmdbResponse>
+
+    @GET("?apikey=1fa7ed15")
+    fun getRemoteMoviesWithPage(@Query("s") title: String, @Query("page") page: String): Observable<OmdbResponse>
 
 
     /*

@@ -1,8 +1,11 @@
-package com.dharringtondev.moviewatchlist.persistence
+package com.dharringtondev.moviewatchlist.repository
 
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.dharringtondev.moviewatchlist.persistence.MovieDao
+import com.dharringtondev.moviewatchlist.persistence.MovieDatabase
+import com.dharringtondev.moviewatchlist.persistence.MovieEntity
 import com.dharringtondev.moviewatchlist.remote.MovieModel
 import com.dharringtondev.moviewatchlist.remote.OmdbService
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -103,7 +106,7 @@ class MovieRepository(application: Application) {
 
     fun getRemoteMovies(filter: String) {
         Log.d(TAG, "getRemoteMovies")
-        OmdbService.create().getRemoteMovies(filter, "1").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+        OmdbService.create().getRemoteMovies(filter).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
             {
                 if(it != null) {
                     remoteMoviesLiveData.postValue(it.results)

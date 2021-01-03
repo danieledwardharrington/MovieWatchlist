@@ -1,6 +1,7 @@
 package com.dharringtondev.moviewatchlist.ui.fragments
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
@@ -40,6 +42,11 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
     private var searchedMovies = ArrayList<MovieModel>()
     private var allMovies = ArrayList<MovieEntity>()
 
+    //handling whether or not to show tutorial
+    private val TUTORIAL_PREF = "TutorialPref"
+    private val TUTORIAL_BOOL_KEY = "TutorialBool"
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
@@ -47,33 +54,41 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initComponents()
+        if (!getTutorialSeen()) {
+            findNavController().navigate(R.id.tutorialDialog)
+        }
     }
 
     private fun initComponents() {
-        if(isOnline(requireContext())) {
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        Log.d(TAG, "initViewModel")
+        movieViewModel = ViewModelProvider(this, MovieViewModelFactory(requireActivity().application)).get(MovieViewModel::class.java)
+        movieViewModel.tutorialSeenLD.observe(viewLifecycleOwner, Observer {
+            Log.d(TAG, "tutorialSeenLD observe; seen = $it")
+            saveTutorialSeen()
+        })
+        if (isOnline(requireContext())) {
             Log.d(TAG, "internet connected")
-            initViewModel()
+            setupSearch()
+            initRV()
+            movieViewModel.getAllMovies()
+            movieViewModel.getRemoteMoviesList().observe(viewLifecycleOwner, Observer {
+                if (it != null) {
+                    searchedMovies = ArrayList(it)
+                    searchAdapter.submitList(searchedMovies)
+                }
+            })
+
+            movieViewModel.getAllMoviesList().observe(viewLifecycleOwner, Observer {
+                allMovies = ArrayList(it)
+            })
         } else {
             Log.e(TAG, "no internet")
             showLongSnackbar("No internet connection")
         }
-    }
-
-    private fun initViewModel() {
-        movieViewModel = ViewModelProvider(this, MovieViewModelFactory(requireActivity().application)).get(MovieViewModel::class.java)
-        setupSearch()
-        initRV()
-        movieViewModel.getAllMovies()
-        movieViewModel.getRemoteMoviesList().observe(viewLifecycleOwner, Observer {
-            if(it != null) {
-                searchedMovies = ArrayList(it)
-                searchAdapter.submitList(searchedMovies)
-            }
-        })
-
-        movieViewModel.getAllMoviesList().observe(viewLifecycleOwner, Observer {
-            allMovies = ArrayList(it)
-        })
     }
 
     private fun initRV() {
@@ -127,6 +142,21 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
         })
     }
 
+    private fun getTutorialSeen(): Boolean {
+        Log.d(TAG, "getTutorialSeen")
+        val prefs = requireActivity().getSharedPreferences(TUTORIAL_PREF, Context.MODE_PRIVATE)
+        val seen = prefs.getBoolean(TUTORIAL_BOOL_KEY, false)
+        Log.d(TAG, "getTutorialSeen; seen = $seen")
+        return seen
+    }
+
+    private fun saveTutorialSeen() {
+        Log.d(TAG, "saveTutorialSeen")
+        val prefs = requireActivity().getSharedPreferences(TUTORIAL_PREF, Context.MODE_PRIVATE)
+        val editor = prefs.edit()
+        editor.putBoolean(TUTORIAL_BOOL_KEY, true).apply()
+    }
+
     //when the user clicks a movie card, a dialog will appear to show more details
     override fun onMovieClicked(movie: MovieModel) {
         val action = SearchFragmentDirections.actionSearchFragmentToFullMovieDialog(movie.getImdbId())
@@ -169,4 +199,5 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
         }
         return false
     }
+
 }
