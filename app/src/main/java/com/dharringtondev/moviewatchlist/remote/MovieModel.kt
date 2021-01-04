@@ -3,66 +3,65 @@ package com.dharringtondev.moviewatchlist.remote
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class MovieModel() {
-
+data class MovieModel(
     @SerializedName("Title")
     @Expose
-    private var title: String = ""
+    private var title: String = "",
 
     @SerializedName("Year")
     @Expose
-    private var year: String = ""
+    private var year: String = "",
 
     @SerializedName("Director")
     @Expose
-    private var director: String = ""
+    private var director: String = "",
 
     @SerializedName("Writer")
-    private var writer: String = ""
+    private var writer: String = "",
 
     @SerializedName("Actors")
     @Expose
-    private var actors: String = ""
+    private var actors: String = "",
 
     @SerializedName("Awards")
     @Expose
-    private var awards: String = ""
+    private var awards: String = "",
 
     @SerializedName("Plot")
     @Expose
-    private var plot: String = ""
+    private var plot: String = "",
 
     @SerializedName("Language")
     @Expose
-    private var language: String = ""
+    private var language: String = "",
 
     @SerializedName("Country")
     @Expose
-    private var country: String = ""
+    private var country: String = "",
 
     @SerializedName("imdbRating")
     @Expose
-    private var imdbRating: String = ""
+    private var imdbRating: String = "",
 
     @SerializedName("imdbID")
     @Expose
-    private var imdbId: String = ""
+    private var imdbId: String = "",
 
     @SerializedName("Poster")
     @Expose
-    private var posterUrl: String = ""
+    private var posterUrl: String = "",
 
     @SerializedName("Rated")
     @Expose
-    private var ageRating: String = ""
+    private var ageRating: String = "",
 
     @SerializedName("Runtime")
     @Expose
-    private var runtime: String = ""
+    private var runtime: String = "",
 
     @SerializedName("Genre")
     @Expose
-    private var genre: String = ""
+    private var genre: String = "") {
 
     fun getImdbId(): String {
         return imdbId

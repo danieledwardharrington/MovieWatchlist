@@ -106,7 +106,7 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val movieModel = searchAdapter.getSearchedList()[viewHolder.bindingAdapterPosition]
+                val movieModel: MovieModel = searchAdapter.getItemAtPosition(viewHolder.bindingAdapterPosition) as MovieModel
                 movieViewModel.getRemoteMovieById(movieModel.getImdbId())
                 movieViewModel.getRemoteMovieByIdLiveData().observe(viewLifecycleOwner, Observer {
                     val movie = it
@@ -114,8 +114,7 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
                     movieViewModel.insert(movieEntity)
                     showShortToast("Movie added to watchlist")
                 })
-                searchAdapter.removeAt(viewHolder.bindingAdapterPosition)
-                movie
+                //searchAdapter.removeAt(viewHolder.bindingAdapterPosition)
             }
         }
 
@@ -123,6 +122,7 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
         itemTouchHelperRight.attachToRecyclerView(binding.resultsRv)
     }
 
+    //this function handles whether or not we're showing the tutorial to the user
     private fun prepareTutorial() {
         val navBackStackEntry = findNavController().getBackStackEntry(R.id.searchFragment)
 

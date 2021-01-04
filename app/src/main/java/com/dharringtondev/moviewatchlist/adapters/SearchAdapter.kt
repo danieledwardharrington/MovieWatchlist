@@ -41,15 +41,26 @@ class SearchAdapter: PagingDataAdapter<MovieModel, SearchAdapter.SearchViewHolde
         Log.d(TAG, "onBindViewHolder")
         when (holder) {
             is SearchViewHolder -> {
-                getItem(position)?.let { holder.bind(it) }
+                getItem(position).let {
+                    if (it != null) {
+                        holder.bind(it)
+                    }
+                }
                 holder.itemView.setOnClickListener {
                     Log.d(TAG, "Movie clicked")
-                    getItem(position)?.let { it1 -> clickedListener.onMovieClicked(it1) }
+                    getItem(position).let { it1 ->
+                        if (it1 != null) {
+                            clickedListener.onMovieClicked(it1)
+                        }
+                    }
                 }
             }
         }
     }
 
+    fun getItemAtPosition(position: Int): MovieModel? {
+        return getItem(position)
+    }
 
     class SearchViewHolder(itemBinding: CardViewSearchedMovieBinding, parentContext: Context): RecyclerView.ViewHolder(itemBinding.root) {
         private val TAG = "SearchViewHolder"
