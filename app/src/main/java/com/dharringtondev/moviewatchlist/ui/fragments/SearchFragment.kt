@@ -115,6 +115,7 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
                     showShortToast("Movie added to watchlist")
                 })
                 searchAdapter.removeAt(viewHolder.bindingAdapterPosition)
+                movie
             }
         }
 

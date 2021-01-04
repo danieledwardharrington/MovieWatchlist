@@ -3,7 +3,7 @@ package com.dharringtondev.moviewatchlist.remote
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class MovieModel {
+data class MovieModel() {
 
     @SerializedName("Title")
     @Expose
