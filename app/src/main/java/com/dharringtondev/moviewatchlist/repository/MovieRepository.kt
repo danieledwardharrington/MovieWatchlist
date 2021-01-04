@@ -3,12 +3,19 @@ package com.dharringtondev.moviewatchlist.repository
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.rxjava3.cachedIn
+import androidx.paging.rxjava3.flowable
 import com.dharringtondev.moviewatchlist.persistence.MovieDao
 import com.dharringtondev.moviewatchlist.persistence.MovieDatabase
 import com.dharringtondev.moviewatchlist.persistence.MovieEntity
 import com.dharringtondev.moviewatchlist.remote.MovieModel
 import com.dharringtondev.moviewatchlist.remote.OmdbService
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
@@ -22,7 +29,7 @@ class MovieRepository(application: Application) {
     private var allMoviesLiveData = MutableLiveData<List<MovieEntity>>()
     private var watchedMoviesLiveData = MutableLiveData<List<MovieEntity>>()
     private var movieWatchlistLiveData = MutableLiveData<List<MovieEntity>>()
-    private var remoteMoviesLiveData = MutableLiveData<List<MovieModel>>()
+    private var remoteMoviesLiveData = MutableLiveData<PagingData<MovieModel>>()
     private var movieByIdLiveData = MutableLiveData<MovieModel>()
 
     fun insert(movieEntity: MovieEntity) {
@@ -104,7 +111,7 @@ class MovieRepository(application: Application) {
         return allMoviesLiveData
     }
 
-    fun getRemoteMovies(filter: String) {
+/*    fun getRemoteMovies(filter: String) {
         Log.d(TAG, "getRemoteMovies")
         OmdbService.create().getRemoteMovies(filter).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
             {
@@ -118,7 +125,7 @@ class MovieRepository(application: Application) {
         ).let {
             compositeDisposable.add(it)
         }
-    }
+    }*/
 
     fun getRemoteMovieById(imdbId: String) {
         Log.d(TAG, "getMovieById: $imdbId")
@@ -139,8 +146,19 @@ class MovieRepository(application: Application) {
         return movieByIdLiveData
     }
 
-    fun getRemoteMoviesLiveData(): MutableLiveData<List<MovieModel>> {
+    fun getRemoteMoviesLiveData(): MutableLiveData<PagingData<MovieModel>> {
         return remoteMoviesLiveData
+    }
+
+    fun getRemoteMoviesWithPage(filter: String): Flowable<PagingData<MovieModel>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 10,
+                enablePlaceholders = false,
+                prefetchDistance = 1
+            ),
+            pagingSourceFactory = {RemoteMoviePagingSource(OmdbService.create(), filter)}
+        ).flowable
     }
 
     //a function to cast the MovieModel, object reutrned from OMDb, to MovieEntity, object stored in the database

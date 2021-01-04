@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dharringtondev.moviewatchlist.R
@@ -13,11 +15,11 @@ import com.dharringtondev.moviewatchlist.databinding.CardViewSearchedMovieBindin
 import com.dharringtondev.moviewatchlist.persistence.MovieEntity
 import com.dharringtondev.moviewatchlist.remote.MovieModel
 
-class SearchAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SearchAdapter: PagingDataAdapter<MovieModel, SearchAdapter.SearchViewHolder>(COMPARATOR) {
 
     private val TAG = "SearchAdapter"
 
-    private var movieList = ArrayList<MovieModel>()
+
     private lateinit var clickedListener: OnMovieClickedListener
 
     interface OnMovieClickedListener {
@@ -28,56 +30,26 @@ class SearchAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         clickedListener = newListener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchAdapter.SearchViewHolder {
         Log.d(TAG, "onCreateViewHolder")
         val itemBinding = CardViewSearchedMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val context = parent.context
         return SearchViewHolder(itemBinding, context)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
         Log.d(TAG, "onBindViewHolder")
         when (holder) {
             is SearchViewHolder -> {
-                holder.bind(movieList[position])
+                getItem(position)?.let { holder.bind(it) }
                 holder.itemView.setOnClickListener {
                     Log.d(TAG, "Movie clicked")
-                    clickedListener.onMovieClicked(movieList[position])
+                    getItem(position)?.let { it1 -> clickedListener.onMovieClicked(it1) }
                 }
             }
         }
     }
 
-    override fun getItemCount(): Int {
-        Log.d(TAG, "getItemCount")
-        return movieList.size
-    }
-
-    fun submitList(newList: ArrayList<MovieModel>) {
-        Log.d(TAG, "submitList; newList length = ${newList.size}")
-        movieList = newList
-        notifyDataSetChanged()
-    }
-
-    private fun add(newMovie: MovieModel) {
-        movieList.add(newMovie)
-        notifyDataSetChanged()
-    }
-
-    fun removeAt(position: Int) {
-        movieList.removeAt(position)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position, movieList.size)
-    }
-
-    fun removeAll() {
-        movieList.clear()
-        notifyDataSetChanged()
-    }
-
-    fun getSearchedList(): ArrayList<MovieModel> {
-        return movieList
-    }
 
     class SearchViewHolder(itemBinding: CardViewSearchedMovieBinding, parentContext: Context): RecyclerView.ViewHolder(itemBinding.root) {
         private val TAG = "SearchViewHolder"
@@ -99,6 +71,18 @@ class SearchAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 .error(R.drawable.ic_error)
                 .centerCrop()
                 .into(posterIV)
+        }
+    }
+
+    companion object {
+        private val COMPARATOR = object: DiffUtil.ItemCallback<MovieModel>() {
+            override fun areItemsTheSame(oldItem: MovieModel, newItem: MovieModel): Boolean {
+                return oldItem.getImdbId() == newItem.getImdbId()
+            }
+
+            override fun areContentsTheSame(oldItem: MovieModel, newItem: MovieModel): Boolean {
+                return oldItem == newItem
+            }
         }
     }
 

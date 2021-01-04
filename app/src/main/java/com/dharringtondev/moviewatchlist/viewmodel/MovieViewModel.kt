@@ -4,6 +4,9 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.rxjava3.cachedIn
 import com.dharringtondev.moviewatchlist.persistence.MovieEntity
 import com.dharringtondev.moviewatchlist.repository.MovieRepository
 import com.dharringtondev.moviewatchlist.remote.MovieModel
@@ -40,9 +43,9 @@ class MovieViewModel(application: Application): ViewModel() {
         movieRepository.getAllWatchedMovies()
     }
 
-    fun getRemoteMovies(filter: String) {
+/*    fun getRemoteMovies(filter: String) {
         movieRepository.getRemoteMovies(filter)
-    }
+    }*/
 
     fun deleteAllMovies() {
         movieRepository.deleteAllMovies()
@@ -64,7 +67,7 @@ class MovieViewModel(application: Application): ViewModel() {
         return movieRepository.getAllMoviesLiveData()
     }
 
-    fun getRemoteMoviesList(): MutableLiveData<List<MovieModel>> {
+    fun getRemoteMoviesList(): MutableLiveData<PagingData<MovieModel>> {
         return movieRepository.getRemoteMoviesLiveData()
     }
 
@@ -80,9 +83,14 @@ class MovieViewModel(application: Application): ViewModel() {
         return movieRepository.modelToEntity(movieModel)
     }
 
-    fun setSeen(seen: Boolean) {
-        Log.d(TAG, "setSeen; seen = $seen")
-        tutorialSeenLD.value = seen
+    fun getRemoteMoviesWithPage(filter: String) {
+        movieRepository.getCompositeDisposable().add(
+            movieRepository.getRemoteMoviesWithPage(filter)
+                .cachedIn(viewModelScope)
+                .subscribe{
+                    movieRepository.getRemoteMoviesLiveData().value = it
+                }
+        )
     }
 
 }

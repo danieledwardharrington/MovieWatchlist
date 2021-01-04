@@ -3,6 +3,7 @@ package com.dharringtondev.moviewatchlist.remote
 import com.dharringtondev.moviewatchlist.BuildConfig
 import com.dharringtondev.moviewatchlist.persistence.MovieEntity
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
@@ -16,12 +17,12 @@ interface OmdbService {
     fun getRemoteMovies(@Query("s") title: String): Observable<OmdbResponse>
 
     @GET("?apikey=1fa7ed15")
-    fun getRemoteMoviesWithPage(@Query("s") title: String, @Query("page") page: String): Observable<OmdbResponse>
+    fun getRemoteMoviesWithPage(@Query("s") title: String, @Query("page") page: String): Single<OmdbResponse>
 
 
     /*
     The OMDb API only returns a limited amount of information when searching for movies, so this function is
-    to take the IMDb ID number from the returned search and then use it to get a more detailed object for
+    here to take the IMDb ID number from the returned search and then use it to get a more detailed object for
     the dialog, which displays detailed information about the movie
      */
     @GET("?apikey=1fa7ed15")

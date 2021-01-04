@@ -16,9 +16,12 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -54,9 +57,7 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initComponents()
-        if (!getTutorialSeen()) {
-            findNavController().navigate(R.id.tutorialDialog)
-        }
+        prepareTutorial()
     }
 
     private fun initComponents() {
@@ -70,15 +71,14 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
             Log.d(TAG, "tutorialSeenLD observe; seen = $it")
             saveTutorialSeen()
         })
+        Log.d(TAG, "internet connected")
+        setupSearch()
+        initRV()
         if (isOnline(requireContext())) {
-            Log.d(TAG, "internet connected")
-            setupSearch()
-            initRV()
             movieViewModel.getAllMovies()
             movieViewModel.getRemoteMoviesList().observe(viewLifecycleOwner, Observer {
                 if (it != null) {
-                    searchedMovies = ArrayList(it)
-                    searchAdapter.submitList(searchedMovies)
+                    searchAdapter.submitData(lifecycle, it)
                 }
             })
 
@@ -106,7 +106,7 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val movieModel = searchAdapter.getSearchedList()[viewHolder.adapterPosition]
+                val movieModel = searchAdapter.getSearchedList()[viewHolder.bindingAdapterPosition]
                 movieViewModel.getRemoteMovieById(movieModel.getImdbId())
                 movieViewModel.getRemoteMovieByIdLiveData().observe(viewLifecycleOwner, Observer {
                     val movie = it
@@ -114,7 +114,7 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
                     movieViewModel.insert(movieEntity)
                     showShortToast("Movie added to watchlist")
                 })
-                searchAdapter.removeAt(viewHolder.adapterPosition)
+                searchAdapter.removeAt(viewHolder.bindingAdapterPosition)
             }
         }
 
@@ -122,20 +122,54 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
         itemTouchHelperRight.attachToRecyclerView(binding.resultsRv)
     }
 
+    private fun prepareTutorial() {
+        val navBackStackEntry = findNavController().getBackStackEntry(R.id.searchFragment)
+
+        // Create our observer and add it to the NavBackStackEntry's lifecycle
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME
+                && navBackStackEntry.savedStateHandle.contains(TUTORIAL_BOOL_KEY)) {
+                val result = navBackStackEntry.savedStateHandle.get<Boolean>(TUTORIAL_BOOL_KEY);
+                if (result!!) {
+                    saveTutorialSeen()
+                }
+            }
+        }
+        navBackStackEntry.lifecycle.addObserver(observer)
+
+        viewLifecycleOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_DESTROY) {
+                navBackStackEntry.lifecycle.removeObserver(observer)
+            }
+        })
+
+        if (!getTutorialSeen()) {
+            findNavController().navigate(R.id.tutorialDialog)
+        }
+    }
+
     private fun setupSearch () {
         binding.movieSv.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Log.d(TAG, "onQueryTextSubmit; query = $query")
-                movieViewModel.getRemoteMovies(query!!)
+                if (isOnline(requireContext())) {
+                    movieViewModel.getRemoteMoviesWithPage(query!!)
+                } else {
+                    showLongSnackbar("No internet connection")
+                }
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 Log.d(TAG, "onQueryTextChange; newText = $newText")
-                if(TextUtils.isEmpty(newText)) {
-                    searchAdapter.removeAll()
+                if(isOnline(requireContext())) {
+                    if (TextUtils.isEmpty(newText)) {
+                        searchAdapter.submitData(lifecycle, PagingData.empty())
+                    } else {
+                        movieViewModel.getRemoteMoviesWithPage(newText!!)
+                    }
                 } else {
-                    movieViewModel.getRemoteMovies(newText!!)
+                    showLongSnackbar("No internet connection")
                 }
                 return false
             }
@@ -200,4 +234,10 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
         return false
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (!isOnline(requireContext())) {
+            showLongSnackbar("No internet connection")
+        }
+    }
 }

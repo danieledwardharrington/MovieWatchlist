@@ -58,9 +58,9 @@ class WatchlistFragment: Fragment(), MovieAdapter.OnMovieClickedListener {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val movieEntity = watchlistAdapter.getMovieList()[viewHolder.adapterPosition]
+                val movieEntity = watchlistAdapter.getMovieList()[viewHolder.bindingAdapterPosition]
                 movieViewModel.delete(movieEntity)
-                watchlistAdapter.removeAt(viewHolder.adapterPosition)
+                watchlistAdapter.removeAt(viewHolder.bindingAdapterPosition)
                 showShortToast("Movie deleted from watchlist")
             }
         }
@@ -71,10 +71,10 @@ class WatchlistFragment: Fragment(), MovieAdapter.OnMovieClickedListener {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val movieEntity = watchlistAdapter.getMovieList()[viewHolder.adapterPosition]
+                val movieEntity = watchlistAdapter.getMovieList()[viewHolder.bindingAdapterPosition]
                 movieEntity.setWatched(true)
                 movieViewModel.update(movieEntity)
-                watchlistAdapter.removeAt(viewHolder.adapterPosition)
+                watchlistAdapter.removeAt(viewHolder.bindingAdapterPosition)
                 showShortToast("Movie marked as watched")
             }
         }
