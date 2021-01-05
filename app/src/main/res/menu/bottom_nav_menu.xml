@@ -16,7 +16,7 @@
     <item
         android:id="@+id/watchedFragment"
         android:icon="@drawable/ic_watched"
-        android:title="Watched"
+        android:title="History"
         />
 
     <item

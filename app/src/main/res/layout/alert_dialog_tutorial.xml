@@ -66,9 +66,10 @@
 
     <TextView
         android:id="@+id/first_instruction_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
         app:layout_constraintTop_toBottomOf="@id/welcome_extra_tv"
         android:layout_marginBottom="@dimen/_8sdp"
         android:textSize="@dimen/_14sdp"
@@ -99,9 +100,10 @@
 
     <TextView
         android:id="@+id/second_instruction_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
         app:layout_constraintTop_toBottomOf="@id/swipe_right_layout"
         android:layout_marginBottom="@dimen/_8sdp"
         android:textSize="@dimen/_14sdp"
@@ -131,7 +133,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/swipe_left_layout"
         app:layout_constraintStart_toStartOf="@id/start_guideline"
