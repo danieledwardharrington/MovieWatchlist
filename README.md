@@ -8,7 +8,7 @@ publicly available IMDb API, I'm leveraging the OMDb API for this app.
 
 _**Why is the order of the search results a bit wonky?**_
 
-This the search functionality of the API. My understanding is that the API sorts its results based on exact matches of the query,
+This is the search functionality of the API. My understanding is that the API sorts its results based on exact matches of the query,
  which can result in some oddities in the way the results are ordered.
  
 _**Why does the list of search results have less information than on the watchlist/history?**_
