@@ -6,11 +6,13 @@ publicly available IMDb API, I'm leveraging the OMDb API for this app.
 
 # FAQ
 
-Why is the order of the search results a bit wonky? \n
+Why is the order of the search results a bit wonky?
+
 This the search functionality of the API. My understanding is that the API sorts its results based on exact matches of the query,
  which can result in some oddities in the way the results are ordered.
  
-Why does the list of search results have less information than on the watchlist/history? \n
+Why does the list of search results have less information than on the watchlist/history?
+
 Again, this due to the API. When searching, the movies that are given to the app have very limited information so on the search page, I'm 
 only showing the information that's given to me. In the watchlist/history screens, I'm able to get more detailed information for those specific 
 films and can thus display more information on the list itself.
@@ -28,7 +30,7 @@ functionality, mostly search, near the bottom of the screen since so many phones
 
 ## Library/Technology Notes
 
-The main libraries I used are as follows: \n
+The main libraries I used are as follows:
 * Glide
 * Gson
 * Navigation Component
