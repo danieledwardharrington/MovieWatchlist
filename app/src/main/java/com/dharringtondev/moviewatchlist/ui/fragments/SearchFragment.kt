@@ -22,6 +22,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
+import androidx.paging.filter
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -107,14 +108,20 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val movieModel: MovieModel = searchAdapter.getItemAtPosition(viewHolder.bindingAdapterPosition) as MovieModel
+                movieViewModel.getSwipedMovieIds().add(movieModel.getImdbId())
                 movieViewModel.getRemoteMovieById(movieModel.getImdbId())
                 movieViewModel.getRemoteMovieByIdLiveData().observe(viewLifecycleOwner, Observer {
                     val movie = it
                     val movieEntity = movieViewModel.modelToEntity(movie)
                     movieViewModel.insert(movieEntity)
+                    movieViewModel.getRemoteMoviesList().value?.let { it1 ->
+                        searchAdapter.submitData(lifecycle, it1.filter {
+                            //it.getImdbId() != movieModel.getImdbId()
+                            !movieViewModel.getSwipedMovieIds().contains(it.getImdbId())
+                        })
+                    }
                     showShortToast("Movie added to watchlist")
                 })
-                //searchAdapter.removeAt(viewHolder.bindingAdapterPosition)
             }
         }
 

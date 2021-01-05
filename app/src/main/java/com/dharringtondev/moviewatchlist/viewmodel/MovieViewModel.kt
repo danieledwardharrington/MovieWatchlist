@@ -16,6 +16,12 @@ class MovieViewModel(application: Application): ViewModel() {
 
     private val movieRepository = MovieRepository(application)
 
+    /*
+    This list is to track the movies that the user has swiped away from the
+    search screen.
+     */
+    private val swipedMovieIds = ArrayList<String>()
+
     val tutorialSeenLD = MutableLiveData<Boolean>()
 
     fun insert(movieEntity: MovieEntity) {
@@ -91,6 +97,10 @@ class MovieViewModel(application: Application): ViewModel() {
                     movieRepository.getRemoteMoviesLiveData().value = it
                 }
         )
+    }
+
+    fun getSwipedMovieIds(): ArrayList<String> {
+        return swipedMovieIds
     }
 
 }
