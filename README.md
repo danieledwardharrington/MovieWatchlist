@@ -13,7 +13,7 @@ This is the search functionality of the API. My understanding is that the API so
  
 _**Why does the list of search results have less information than on the watchlist/history?**_
 
-Again, this due to the API. When searching, the movies that are given to the app have very limited information so on the search page, I'm 
+Again, this is due to the API. When searching, the movies that are given to the app have very limited information so on the search page, I'm 
 only showing the information that's given to me. In the watchlist/history screens, I'm able to get more detailed information for those specific 
 films and can thus display more information on the list itself.
 
