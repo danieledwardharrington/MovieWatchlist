@@ -1,8 +1,21 @@
 <resources>
     <string name="app_name">Movie Watchlist</string>
     <string name="omdb_api_key">1fa7ed15</string>
+
+    <!--URLs-->
+    <string name="app_url"></string>
     <string name="google_form_url">https://forms.gle/Hz8pvFd6ATLerN7PA</string>
     <string name="github_url">https://github.com/danieledwardharrington/MovieWatchlist</string>
+    <string name="glide_url">https://bumptech.github.io/glide/</string>
+    <string name="gson_url">https://github.com/google/gson</string>
+    <string name="nav_component_url">https://developer.android.com/guide/navigation/navigation-getting-started?authuser=2</string>
+    <string name="omdb_url">http://www.omdbapi.com/</string>
+    <string name="paging_url">https://developer.android.com/topic/libraries/architecture/paging/v3-overview</string>
+    <string name="retrofit_url">https://square.github.io/retrofit/</string>
+    <string name="room_url">https://developer.android.com/jetpack/androidx/releases/room</string>
+    <string name="rxjava_url">https://github.com/ReactiveX/RxJava</string>
+    <string name="sdp_url">https://github.com/intuit/sdp</string>
+
     <string name="first_instruction">From the search screen, swipe the movie to the right to add it to your watchlist. If you\'re on the watchlist, swiping right will mark the movie as watched and move it to your history. From your history, swiping right will return it to the watchlist.</string>
     <string name="second_instruction">From either the watchlist or the history screens, swiping left will delete the movie. Note: From the watchlist, this is NOT the same as marking it as watched and it will not appear in your history.</string>
     <string name="third_instruction">That\'s it! If you need to see this screen again, you can find it in the About tab at the bottom of the screen</string>

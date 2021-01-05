@@ -79,7 +79,7 @@ class MovieAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val yearTV = itemBinding.yearTv
         private val directorTV = itemBinding.directorTv
         private val startsTV = itemBinding.starsTv
-        private val watchedTV = itemBinding.watchedTv
+        //private val watchedTV = itemBinding.watchedTv
         private val posterIV = itemBinding.posterIv
 
         fun bind(movieEntity: MovieEntity) {
@@ -88,9 +88,9 @@ class MovieAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             yearTV.text = movieEntity.getYear()
             directorTV.text = movieEntity.getDirector()
             startsTV.text = movieEntity.getActors()
-            if (movieEntity.getWatched()) {
+/*            if (movieEntity.getWatched()) {
                 watchedTV.visibility = View.VISIBLE
-            }
+            }*/
 
             //loading poster with Glide
             Glide.with(context)
