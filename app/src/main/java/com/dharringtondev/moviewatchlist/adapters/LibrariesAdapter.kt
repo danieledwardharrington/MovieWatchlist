@@ -10,6 +10,15 @@ class LibrariesAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TAG = "LibrariesAdapter"
 
     private val librariesList = arrayListOf("Glide", "Gson", "Navigation Component", "OMDb API", "Paging Library V3", "Retrofit", "Room", "RxJava3", "sdp")
+    private lateinit var listener: OnItemClickedListener
+
+    interface OnItemClickedListener{
+        fun onItemClicked(itemName: String)
+    }
+
+    fun setItemClickedListener(newListener: OnItemClickedListener) {
+        listener = newListener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemBinding = CardViewLibrariesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -20,6 +29,9 @@ class LibrariesAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         when (holder) {
             is LibrariesViewHolder -> {
                 holder.bind(librariesList[position])
+                holder.itemView.setOnClickListener {
+                    listener.onItemClicked(librariesList[position])
+                }
             }
         }
 
