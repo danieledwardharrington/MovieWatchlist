@@ -60,7 +60,7 @@ class AboutFragment: Fragment(), AboutAdapter.OnItemClickedListener {
                 launchReview()
             }
             "Share" -> {
-
+                shareApp()
             }
             "Libraries" -> {
                 navController.navigate(R.id.librariesFragment)
@@ -75,6 +75,14 @@ class AboutFragment: Fragment(), AboutAdapter.OnItemClickedListener {
                 navController.navigate(R.id.tutorialDialog)
             }
         }
+    }
+
+    private fun shareApp() {
+        val intent = Intent()
+        intent.action=Intent.ACTION_SEND
+        intent.putExtra(Intent.EXTRA_TEXT,"Movie Watchlist: Search. Save. Watch.")
+        intent.type="text/plain"
+        startActivity(Intent.createChooser(intent,"Share To:"))
     }
 
     private fun launchReview() {
