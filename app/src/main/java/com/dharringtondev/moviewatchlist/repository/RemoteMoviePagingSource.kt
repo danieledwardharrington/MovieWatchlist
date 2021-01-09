@@ -1,9 +1,8 @@
 package com.dharringtondev.moviewatchlist.repository
 
 import androidx.paging.rxjava3.RxPagingSource
-import com.dharringtondev.moviewatchlist.remote.MovieModel
-import com.dharringtondev.moviewatchlist.remote.OmdbResponse
-import com.dharringtondev.moviewatchlist.remote.OmdbService
+import com.dharringtondev.moviewatchlist.remote.omdb.MovieModel
+import com.dharringtondev.moviewatchlist.remote.omdb.OmdbService
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 

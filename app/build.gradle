@@ -21,7 +21,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", "BASE_URL", '"http://www.omdbapi.com/"'
+        buildConfigField "String", "BASE_OMDB_URL", '"http://www.omdbapi.com/"'
+        buildConfigField "String", "BASE_TMDB_URL", '"https://api.themoviedb.org/"'
     }
 
     buildTypes {

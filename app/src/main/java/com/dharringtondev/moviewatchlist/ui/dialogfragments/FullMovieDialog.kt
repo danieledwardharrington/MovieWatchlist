@@ -12,7 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.dharringtondev.moviewatchlist.R
 import com.dharringtondev.moviewatchlist.databinding.AlertDialogFullMovieBinding
-import com.dharringtondev.moviewatchlist.remote.MovieModel
+import com.dharringtondev.moviewatchlist.remote.omdb.MovieModel
 import com.dharringtondev.moviewatchlist.viewmodel.MovieViewModel
 import com.dharringtondev.moviewatchlist.viewmodel.MovieViewModelFactory
 

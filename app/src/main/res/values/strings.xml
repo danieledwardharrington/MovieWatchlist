@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Movie Watchlist</string>
     <string name="omdb_api_key">1fa7ed15</string>
+    <string name="tmdb_api_key">3ab40c34487d886f8ecdcfd893a454c5</string>
 
     <!--URLs-->
     <string name="app_url"></string>

@@ -6,16 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.rxjava3.cachedIn
 import androidx.paging.rxjava3.flowable
 import com.dharringtondev.moviewatchlist.persistence.MovieDao
 import com.dharringtondev.moviewatchlist.persistence.MovieDatabase
 import com.dharringtondev.moviewatchlist.persistence.MovieEntity
-import com.dharringtondev.moviewatchlist.remote.MovieModel
-import com.dharringtondev.moviewatchlist.remote.OmdbService
+import com.dharringtondev.moviewatchlist.remote.omdb.MovieModel
+import com.dharringtondev.moviewatchlist.remote.omdb.OmdbService
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 

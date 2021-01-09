@@ -1,7 +1,6 @@
 package com.dharringtondev.moviewatchlist.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,7 +8,7 @@ import androidx.paging.PagingData
 import androidx.paging.rxjava3.cachedIn
 import com.dharringtondev.moviewatchlist.persistence.MovieEntity
 import com.dharringtondev.moviewatchlist.repository.MovieRepository
-import com.dharringtondev.moviewatchlist.remote.MovieModel
+import com.dharringtondev.moviewatchlist.remote.omdb.MovieModel
 
 class MovieViewModel(application: Application): ViewModel() {
     private val TAG = "MovieViewModel"

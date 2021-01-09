@@ -3,17 +3,14 @@ package com.dharringtondev.moviewatchlist.adapters
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dharringtondev.moviewatchlist.R
-import com.dharringtondev.moviewatchlist.databinding.CardViewMovieBinding
 import com.dharringtondev.moviewatchlist.databinding.CardViewSearchedMovieBinding
-import com.dharringtondev.moviewatchlist.persistence.MovieEntity
-import com.dharringtondev.moviewatchlist.remote.MovieModel
+import com.dharringtondev.moviewatchlist.remote.omdb.MovieModel
 
 class SearchAdapter: PagingDataAdapter<MovieModel, SearchAdapter.SearchViewHolder>(COMPARATOR) {
 

@@ -1,4 +1,4 @@
-package com.dharringtondev.moviewatchlist.remote
+package com.dharringtondev.moviewatchlist.remote.omdb
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

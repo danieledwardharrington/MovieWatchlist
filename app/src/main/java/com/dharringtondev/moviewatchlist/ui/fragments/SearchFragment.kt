@@ -1,7 +1,6 @@
 package com.dharringtondev.moviewatchlist.ui.fragments
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
@@ -10,11 +9,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -30,7 +26,7 @@ import com.dharringtondev.moviewatchlist.R
 import com.dharringtondev.moviewatchlist.adapters.SearchAdapter
 import com.dharringtondev.moviewatchlist.databinding.FragmentSearchBinding
 import com.dharringtondev.moviewatchlist.persistence.MovieEntity
-import com.dharringtondev.moviewatchlist.remote.MovieModel
+import com.dharringtondev.moviewatchlist.remote.omdb.MovieModel
 import com.dharringtondev.moviewatchlist.viewmodel.MovieViewModel
 import com.dharringtondev.moviewatchlist.viewmodel.MovieViewModelFactory
 import com.google.android.material.snackbar.Snackbar

@@ -1,7 +1,6 @@
-package com.dharringtondev.moviewatchlist.remote
+package com.dharringtondev.moviewatchlist.remote.omdb
 
 import com.dharringtondev.moviewatchlist.BuildConfig
-import com.dharringtondev.moviewatchlist.persistence.MovieEntity
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import okhttp3.OkHttpClient
@@ -36,7 +35,7 @@ interface OmdbService {
                     .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(client)
-                    .baseUrl(BuildConfig.BASE_URL)
+                    .baseUrl(BuildConfig.BASE_OMDB_URL)
                     .build()
 
             return retrofit.create(OmdbService::class.java)
