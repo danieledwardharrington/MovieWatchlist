@@ -16,7 +16,6 @@ class SearchAdapter: PagingDataAdapter<MovieModel, SearchAdapter.SearchViewHolde
 
     private val TAG = "SearchAdapter"
 
-
     private lateinit var clickedListener: OnMovieClickedListener
 
     interface OnMovieClickedListener {

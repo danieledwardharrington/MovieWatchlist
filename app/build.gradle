@@ -22,7 +22,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "BASE_OMDB_URL", '"http://www.omdbapi.com/"'
+        buildConfigField "String", "OMDB_API_KEY", '"1fa7ed15"'
+
         buildConfigField "String", "BASE_TMDB_URL", '"https://api.themoviedb.org/"'
+        buildConfigField "String", "TMDB_API_KEY", '"3ab40c34487d886f8ecdcfd893a454c5"'
     }
 
     buildTypes {
