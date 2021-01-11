@@ -64,7 +64,7 @@
         android:id="@+id/fullMovieDialog"
         android:name="com.dharringtondev.moviewatchlist.ui.dialogfragments.FullMovieDialog"
         android:label="alert_dialog_full_movie"
-        tools:layout="@layout/alert_dialog_full_movie" >
+        tools:layout="@layout/alert_dialog_full_movie">
         <argument
             android:name="imdbId"
             app:argType="string" />

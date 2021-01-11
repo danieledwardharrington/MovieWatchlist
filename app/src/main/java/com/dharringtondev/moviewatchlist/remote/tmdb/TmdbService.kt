@@ -20,8 +20,8 @@ interface TmdbService {
     @GET("3/trending/movie/day?api_key=${BuildConfig.TMDB_API_KEY}")
     fun getTrendingMoviesDay(): Single<TmdbResponse>
 
-    @GET("3/movie/{tmdbId}/externalIds?api_key=${BuildConfig.TMDB_API_KEY}")
-    fun getTmdbMovieExternalIds(@Path("tmdbId") tmdbId: Int): Observable<TmdbIdModel>
+    @GET("3/movie/{tmdbId}/external_ids?api_key=${BuildConfig.TMDB_API_KEY}")
+    fun getTmdbMovieExternalIds(@Path("tmdbId") tmdbId: String): Observable<TmdbIdModel>
 
     companion object {
         fun create(): TmdbService {

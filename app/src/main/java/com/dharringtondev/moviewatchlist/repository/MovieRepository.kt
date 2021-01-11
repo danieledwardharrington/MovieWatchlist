@@ -169,8 +169,10 @@ class MovieRepository(application: Application) {
     }
 
     fun getExternalIdFromTmdb(tmdbId: Int) {
-        TmdbService.create().getTmdbMovieExternalIds(tmdbId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+        Log.d(TAG, "getExternalIdFromTmdb")
+        TmdbService.create().getTmdbMovieExternalIds(tmdbId.toString()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
             {
+                Log.d(TAG, "getExternalIdFromTmdb; imdb: ${it.getImdbId()}")
                 externalIdLiveData.postValue(it.getImdbId())
             },
             {

@@ -82,6 +82,19 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
             movieViewModel.getAllMoviesList().observe(viewLifecycleOwner, Observer {
                 allMovies = ArrayList(it)
             })
+
+            movieViewModel.getRemoteMovieByIdLiveData().observe(viewLifecycleOwner, Observer {
+                val movie = it
+                val movieEntity = movieViewModel.modelToEntity(movie)
+                movieViewModel.insert(movieEntity)
+                movieViewModel.getRemoteMoviesList().value?.let { it1 ->
+                    searchAdapter.submitData(lifecycle, it1.filter {
+                        !movieViewModel.getSwipedMovieIds().contains(it.getImdbId())
+                    })
+                }
+                showShortToast("Movie added to watchlist")
+            })
+
         } else {
             Log.e(TAG, "no internet")
             showLongSnackbar("No internet connection")
@@ -106,18 +119,17 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
                 val movieModel: MovieModel = searchAdapter.getItemAtPosition(viewHolder.bindingAdapterPosition) as MovieModel
                 movieViewModel.getSwipedMovieIds().add(movieModel.getImdbId())
                 movieViewModel.getRemoteMovieById(movieModel.getImdbId())
-                movieViewModel.getRemoteMovieByIdLiveData().observe(viewLifecycleOwner, Observer {
+/*                movieViewModel.getRemoteMovieByIdLiveData().observe(viewLifecycleOwner, Observer {
                     val movie = it
                     val movieEntity = movieViewModel.modelToEntity(movie)
                     movieViewModel.insert(movieEntity)
                     movieViewModel.getRemoteMoviesList().value?.let { it1 ->
                         searchAdapter.submitData(lifecycle, it1.filter {
-                            //it.getImdbId() != movieModel.getImdbId()
                             !movieViewModel.getSwipedMovieIds().contains(it.getImdbId())
                         })
                     }
                     showShortToast("Movie added to watchlist")
-                })
+                })*/
             }
         }
 
@@ -222,15 +234,15 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
         if (capabilities != null) {
             when {
                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
-                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    Log.i(TAG, "NetworkCapabilities.TRANSPORT_CELLULAR")
                     return true
                 }
                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
-                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    Log.i(TAG, "NetworkCapabilities.TRANSPORT_WIFI")
                     return true
                 }
                 capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
-                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    Log.i(TAG, "NetworkCapabilities.TRANSPORT_ETHERNET")
                     return true
                 }
             }

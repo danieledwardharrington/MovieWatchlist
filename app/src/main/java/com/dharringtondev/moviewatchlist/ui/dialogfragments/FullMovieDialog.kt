@@ -42,7 +42,7 @@ class FullMovieDialog: DialogFragment() {
 
         /*
         Since the search from the API returns very limited information about the movie, we're grabbing the IMDb ID from that search
-        and using it get an object with more details for the purposes of this dialog.
+        and using it to get an object with more details for the purposes of this dialog.
          */
         movieViewModel.getRemoteMovieById(imdbId)
         movieViewModel.getRemoteMovieByIdLiveData().observe(this, Observer {
@@ -55,6 +55,7 @@ class FullMovieDialog: DialogFragment() {
     private fun setupText(movie: MovieModel) {
         Log.d(TAG, "setupText")
         binding.apply {
+            Log.d(TAG, "binding.apply")
             movieTitleTv.text = movie.getTitle()
             yearTv.text = movie.getYear()
             runtimeTv.text = movie.getRuntime()
@@ -88,6 +89,8 @@ class FullMovieDialog: DialogFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.d(TAG, "onDestroyView")
+        imdbId = ""
         _binding = null
     }
 }

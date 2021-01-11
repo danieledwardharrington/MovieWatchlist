@@ -13,7 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.paging.filter
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dharringtondev.moviewatchlist.adapters.TrendingAdapter
 import com.dharringtondev.moviewatchlist.databinding.FragmentTrendingBinding
 import com.dharringtondev.moviewatchlist.remote.tmdb.models.TmdbMovieModel
@@ -29,6 +32,7 @@ class TrendingFragment: Fragment(), TrendingAdapter.OnTrendingMovieClickedListen
 
     private lateinit var movieViewModel: MovieViewModel
     private val trendingAdapter = TrendingAdapter()
+    private var imdbId: String = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.d(TAG, "onCreateView")
@@ -62,6 +66,13 @@ class TrendingFragment: Fragment(), TrendingAdapter.OnTrendingMovieClickedListen
             }
         })
         movieViewModel.getTrendingMoviesWithPage()
+
+        movieViewModel.getExternalIdLiveData().observe(viewLifecycleOwner, Observer {
+            imdbId = it
+            Log.d(TAG, "getExternalIdLD; imdbId: $it")
+            val action = TrendingFragmentDirections.actionTrendingFragmentToFullMovieDialog(it)
+            findNavController().navigate(action)
+        })
     }
 
     private fun initRV() {
@@ -72,18 +83,33 @@ class TrendingFragment: Fragment(), TrendingAdapter.OnTrendingMovieClickedListen
             adapter = trendingAdapter
             trendingAdapter.setTrendingMovieClickedListener(this@TrendingFragment)
         }
+
+        //swiping right to add to watchlist
+        val itemRight = object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val tmdbMovie = trendingAdapter.getItemAtPosition(viewHolder.bindingAdapterPosition) as TmdbMovieModel
+                movieViewModel.getSwipedMovieIds().add(tmdbMovie.getTmdbId().toString())
+                movieViewModel.getTrendingMoviesList().value?.let {
+                    trendingAdapter.submitData(lifecycle, it.filter {
+                        !movieViewModel.getSwipedMovieIds().contains(it.getTmdbId().toString())
+                    })
+                }
+                showShortToast("Movie added to watchlist")
+            }
+        }
+
+        val itemTouchHelperRight = ItemTouchHelper(itemRight)
+        itemTouchHelperRight.attachToRecyclerView(binding.trendingRv)
     }
 
     override fun onTrendingMovieClicked(movie: TmdbMovieModel) {
         Log.d(TAG, "onTrendingMovieClicked")
         movieViewModel.getExternalIdFromTmdb(movie.getTmdbId())
-        movieViewModel.getExternalIdLiveData().observe(viewLifecycleOwner, Observer {
-            if(it != null) {
-                Log.d(TAG, "clicked; not null")
-                val action = TrendingFragmentDirections.actionTrendingFragmentToFullMovieDialog(it)
-                findNavController().navigate(action)
-            }
-        })
+        Log.d(TAG, "onTrendingClicked; tmdbId: ${movie.getTmdbId()}")
     }
 
     private fun showShortToast(message: String) {
