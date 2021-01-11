@@ -22,7 +22,7 @@ class RemoteTmdbMoviePagingSource(private val tmdbService: TmdbService): RxPagin
                 LoadResult.Page(
                     data = it.results,
                     prevKey = if (position == REMOTE_STARTING_PAGE_INDEX) null else position - 1,
-                    nextKey = if (it.results.isEmpty()) null else position + 1
+                    nextKey = if (it.results.isEmpty() || position == 2) null else 2
                 ) as LoadResult<Int, TmdbMovieModel>
             }.onErrorReturn {
                 LoadResult.Error(it)

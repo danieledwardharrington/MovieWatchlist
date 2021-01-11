@@ -161,8 +161,8 @@ class MovieRepository(application: Application) {
         return Pager(
             config = PagingConfig(
                 pageSize = 10,
-                enablePlaceholders = false,
-                prefetchDistance = 1
+                enablePlaceholders = true,
+                prefetchDistance = 0
             ),
             pagingSourceFactory = {RemoteTmdbMoviePagingSource(TmdbService.create())}
         ).flowable

@@ -34,6 +34,8 @@ class TrendingFragment: Fragment(), TrendingAdapter.OnTrendingMovieClickedListen
     private val trendingAdapter = TrendingAdapter()
     private var imdbId: String = ""
 
+    private var fromMovieClicked = false //using this to track if a movie was clicked or swiped
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.d(TAG, "onCreateView")
         _binding = FragmentTrendingBinding.inflate(inflater, container, false)
@@ -67,18 +69,37 @@ class TrendingFragment: Fragment(), TrendingAdapter.OnTrendingMovieClickedListen
         })
         movieViewModel.getTrendingMoviesWithPage()
 
-        movieViewModel.getExternalIdLiveData().observe(viewLifecycleOwner, Observer {
-            imdbId = it
-            Log.d(TAG, "getExternalIdLD; imdbId: $it")
-            val action = TrendingFragmentDirections.actionTrendingFragmentToFullMovieDialog(it)
-            findNavController().navigate(action)
+        movieViewModel.getExternalIdLiveData().observe(viewLifecycleOwner, Observer { id ->
+            imdbId = id
+            Log.d(TAG, "getExternalIdLD; imdbId: $id")
+            if (fromMovieClicked) {
+                Log.d(TAG, "externalIdLD; fromMovieClicked == true")
+                val action = TrendingFragmentDirections.actionTrendingFragmentToFullMovieDialog(id)
+                findNavController().navigate(action)
+                fromMovieClicked = false
+            } else {
+                Log.d(TAG, "externalIdLD; fromMovieClicked == false")
+                movieViewModel.getRemoteMovieById(imdbId)
+                movieViewModel.getTrendingMoviesList().value?.let { pagingData ->
+                    trendingAdapter.submitData(lifecycle, pagingData.filter { tmdbMovie ->
+                        !movieViewModel.getSwipedMovieIds().contains(tmdbMovie.getTmdbId().toString())
+                    })
+                }
+                showShortToast("Movie added to watchlist")
+            }
         })
 
-/*        movieViewModel.getTrendingMoviesList().value?.let {
-            trendingAdapter.submitData(lifecycle, it.filter {
-                !movieViewModel.getSwipedMovieIds().contains(it.getTmdbId().toString())
-            })
-        }*/
+        movieViewModel.getRemoteMovieByIdLiveData().observe(viewLifecycleOwner, Observer {
+            val movie =  it
+            val movieEntity = movieViewModel.modelToEntity(movie)
+            movieViewModel.insert(movieEntity)
+/*            movieViewModel.getTrendingMoviesList().value?.let {
+                trendingAdapter.submitData(lifecycle, it.filter {
+                    !movieViewModel.getSwipedMovieIds().contains(it.getTmdbId().toString())
+                })
+            }
+            showShortToast("Movie added to watchlist")*/
+        })
     }
 
     private fun initRV() {
@@ -100,12 +121,13 @@ class TrendingFragment: Fragment(), TrendingAdapter.OnTrendingMovieClickedListen
                 Log.d(TAG, "movie swiped")
                 val tmdbMovie = trendingAdapter.getItemAtPosition(viewHolder.bindingAdapterPosition) as TmdbMovieModel
                 movieViewModel.getSwipedMovieIds().add(tmdbMovie.getTmdbId().toString())
-                movieViewModel.getTrendingMoviesList().value?.let {
+                movieViewModel.getExternalIdFromTmdb(tmdbMovie.getTmdbId())
+/*                movieViewModel.getTrendingMoviesList().value?.let {
                     trendingAdapter.submitData(lifecycle, it.filter {
                         !movieViewModel.getSwipedMovieIds().contains(it.getTmdbId().toString())
                     })
                 }
-                showShortToast("Movie added to watchlist")
+                showShortToast("Movie added to watchlist")*/
             }
         }
 
@@ -114,6 +136,7 @@ class TrendingFragment: Fragment(), TrendingAdapter.OnTrendingMovieClickedListen
     }
 
     override fun onTrendingMovieClicked(movie: TmdbMovieModel) {
+        fromMovieClicked = true
         Log.d(TAG, "onTrendingMovieClicked")
         movieViewModel.getExternalIdFromTmdb(movie.getTmdbId())
         Log.d(TAG, "onTrendingClicked; tmdbId: ${movie.getTmdbId()}")
