@@ -74,4 +74,13 @@
         android:name="com.dharringtondev.moviewatchlist.ui.dialogfragments.TutorialDialog"
         android:label="alert_dialog_tutorial"
         tools:layout="@layout/alert_dialog_tutorial" />
+    <fragment
+        android:id="@+id/trendingFragment"
+        android:name="com.dharringtondev.moviewatchlist.ui.fragments.TrendingFragment"
+        android:label="fragment_trending"
+        tools:layout="@layout/fragment_trending">
+        <action
+            android:id="@+id/action_trendingFragment_to_fullMovieDialog"
+            app:destination="@id/fullMovieDialog" />
+    </fragment>
 </navigation>

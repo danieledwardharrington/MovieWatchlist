@@ -8,7 +8,8 @@ import androidx.paging.PagingData
 import androidx.paging.rxjava3.cachedIn
 import com.dharringtondev.moviewatchlist.persistence.MovieEntity
 import com.dharringtondev.moviewatchlist.repository.MovieRepository
-import com.dharringtondev.moviewatchlist.remote.omdb.MovieModel
+import com.dharringtondev.moviewatchlist.remote.omdb.models.MovieModel
+import com.dharringtondev.moviewatchlist.remote.tmdb.models.TmdbMovieModel
 
 class MovieViewModel(application: Application): ViewModel() {
     private val TAG = "MovieViewModel"
@@ -76,6 +77,10 @@ class MovieViewModel(application: Application): ViewModel() {
         return movieRepository.getRemoteMoviesLiveData()
     }
 
+    fun getTrendingMoviesList(): MutableLiveData<PagingData<TmdbMovieModel>> {
+        return movieRepository.getTrendingMoviesLiveData()
+    }
+
     fun getRemoteMovieById(imdbId: String) {
         movieRepository.getRemoteMovieById(imdbId)
     }
@@ -98,8 +103,26 @@ class MovieViewModel(application: Application): ViewModel() {
         )
     }
 
+    fun getTrendingMoviesWithPage() {
+        movieRepository.getCompositeDisposable().add(
+            movieRepository.getTrendingMoviesWithPage()
+                .cachedIn(viewModelScope)
+                .subscribe {
+                    movieRepository.getTrendingMoviesLiveData().value = it
+                }
+        )
+    }
+
     fun getSwipedMovieIds(): ArrayList<String> {
         return swipedMovieIds
+    }
+
+    fun getExternalIdFromTmdb(tmdbId: Int) {
+        movieRepository.getExternalIdFromTmdb(tmdbId)
+    }
+
+    fun getExternalIdLiveData(): MutableLiveData<String> {
+        return movieRepository.getExternalIdLiveData()
     }
 
 }

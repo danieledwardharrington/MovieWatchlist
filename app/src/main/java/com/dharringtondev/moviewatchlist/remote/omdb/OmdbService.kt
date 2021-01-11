@@ -1,6 +1,8 @@
 package com.dharringtondev.moviewatchlist.remote.omdb
 
 import com.dharringtondev.moviewatchlist.BuildConfig
+import com.dharringtondev.moviewatchlist.remote.omdb.models.MovieModel
+import com.dharringtondev.moviewatchlist.remote.omdb.models.OmdbResponse
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import okhttp3.OkHttpClient

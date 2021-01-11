@@ -1,4 +1,4 @@
-package com.dharringtondev.moviewatchlist.remote.tmdb
+package com.dharringtondev.moviewatchlist.remote.tmdb.models
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -21,6 +21,7 @@ data class TmdbMovieModel(@SerializedName("original_title")
 
     //The release date includes day and month, I only need the year so I'll take care of that with this
     private var releaseYear = ""
+    private val basePosterPath = "https://image.tmdb.org/t/p/original/"
 
     fun getTitle(): String {
         return title
@@ -39,7 +40,7 @@ data class TmdbMovieModel(@SerializedName("original_title")
     }
 
     fun getPosterPath(): String {
-        return posterPath
+        return basePosterPath.plus(posterPath)
     }
 
     fun setPosterPath(newPath: String) {

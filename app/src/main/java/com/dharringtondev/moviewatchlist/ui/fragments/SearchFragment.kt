@@ -26,7 +26,7 @@ import com.dharringtondev.moviewatchlist.R
 import com.dharringtondev.moviewatchlist.adapters.SearchAdapter
 import com.dharringtondev.moviewatchlist.databinding.FragmentSearchBinding
 import com.dharringtondev.moviewatchlist.persistence.MovieEntity
-import com.dharringtondev.moviewatchlist.remote.omdb.MovieModel
+import com.dharringtondev.moviewatchlist.remote.omdb.models.MovieModel
 import com.dharringtondev.moviewatchlist.viewmodel.MovieViewModel
 import com.dharringtondev.moviewatchlist.viewmodel.MovieViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -39,7 +39,6 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
 
     private lateinit var movieViewModel: MovieViewModel
     private val searchAdapter = SearchAdapter()
-    private var searchedMovies = ArrayList<MovieModel>()
     private var allMovies = ArrayList<MovieEntity>()
 
     //handling whether or not to show tutorial
@@ -53,6 +52,7 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initComponents()
         prepareTutorial()
     }
@@ -152,7 +152,7 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
         }
     }
 
-    private fun setupSearch () {
+    private fun setupSearch() {
         binding.movieSv.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Log.d(TAG, "onQueryTextSubmit; query = $query")

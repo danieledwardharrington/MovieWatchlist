@@ -1,5 +1,6 @@
-package com.dharringtondev.moviewatchlist.remote.omdb
+package com.dharringtondev.moviewatchlist.remote.omdb.models
 
+import com.dharringtondev.moviewatchlist.remote.omdb.models.MovieModel
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 

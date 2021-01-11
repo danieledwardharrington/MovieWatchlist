@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dharringtondev.moviewatchlist.R
 import com.dharringtondev.moviewatchlist.databinding.CardViewSearchedMovieBinding
-import com.dharringtondev.moviewatchlist.remote.omdb.MovieModel
+import com.dharringtondev.moviewatchlist.remote.omdb.models.MovieModel
 
 class SearchAdapter: PagingDataAdapter<MovieModel, SearchAdapter.SearchViewHolder>(COMPARATOR) {
 
