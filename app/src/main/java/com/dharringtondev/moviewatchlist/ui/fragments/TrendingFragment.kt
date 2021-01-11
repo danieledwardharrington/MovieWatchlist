@@ -73,6 +73,12 @@ class TrendingFragment: Fragment(), TrendingAdapter.OnTrendingMovieClickedListen
             val action = TrendingFragmentDirections.actionTrendingFragmentToFullMovieDialog(it)
             findNavController().navigate(action)
         })
+
+/*        movieViewModel.getTrendingMoviesList().value?.let {
+            trendingAdapter.submitData(lifecycle, it.filter {
+                !movieViewModel.getSwipedMovieIds().contains(it.getTmdbId().toString())
+            })
+        }*/
     }
 
     private fun initRV() {
@@ -91,6 +97,7 @@ class TrendingFragment: Fragment(), TrendingAdapter.OnTrendingMovieClickedListen
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                Log.d(TAG, "movie swiped")
                 val tmdbMovie = trendingAdapter.getItemAtPosition(viewHolder.bindingAdapterPosition) as TmdbMovieModel
                 movieViewModel.getSwipedMovieIds().add(tmdbMovie.getTmdbId().toString())
                 movieViewModel.getTrendingMoviesList().value?.let {
