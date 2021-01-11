@@ -17,7 +17,7 @@ interface OmdbService {
     @GET("?apikey=1fa7ed15")
     fun getRemoteMovies(@Query("s") title: String): Observable<OmdbResponse>
 
-    @GET("?apikey=${BuildConfig.OMDB_API_KEY}")
+    @GET("?apikey=${BuildConfig.OMDB_API_KEY}&type=movie")
     fun getRemoteMoviesWithPage(@Query("s") title: String, @Query("page") page: String): Single<OmdbResponse>
 
 
