@@ -87,8 +87,8 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
                 val movie = it
                 val movieEntity = movieViewModel.modelToEntity(movie)
                 movieViewModel.insert(movieEntity)
-                movieViewModel.getRemoteMoviesList().value?.let { it1 ->
-                    searchAdapter.submitData(lifecycle, it1.filter {
+                movieViewModel.getRemoteMoviesList().value?.let { pagingData ->
+                    searchAdapter.submitData(lifecycle, pagingData.filter {
                         Log.d(TAG, "submitData filter")
                         !movieViewModel.getSwipedMovieIds().contains(it.getImdbId())
                     })

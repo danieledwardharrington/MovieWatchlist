@@ -32,7 +32,6 @@ class TrendingFragment: Fragment(), TrendingAdapter.OnTrendingMovieClickedListen
 
     private lateinit var movieViewModel: MovieViewModel
     private val trendingAdapter = TrendingAdapter()
-    private var imdbId: String = ""
 
     private var fromMovieClicked = false //using this to track if a movie was clicked or swiped
 
@@ -70,7 +69,6 @@ class TrendingFragment: Fragment(), TrendingAdapter.OnTrendingMovieClickedListen
         movieViewModel.getTrendingMoviesWithPage()
 
         movieViewModel.getExternalIdLiveData().observe(viewLifecycleOwner, Observer { id ->
-            //imdbId = id
             Log.d(TAG, "getExternalIdLD; imdbId: $id")
             movieViewModel.getRemoteMovieById(id)
         })
@@ -87,7 +85,7 @@ class TrendingFragment: Fragment(), TrendingAdapter.OnTrendingMovieClickedListen
                 val movieEntity = movieViewModel.modelToEntity(movie)
                 movieViewModel.insert(movieEntity)
                 movieViewModel.getTrendingMoviesList().value?.let { pagingData ->
-                    Log.d(TAG, "remoteMovieByIdLiveData observe; from swiped")
+                    Log.d(TAG, "trendingMovieByIdLiveData observe; from swiped")
                     trendingAdapter.submitData(lifecycle, pagingData.filter { tmdbMovieModel ->
                         Log.d(TAG, "submitData filter")
                         !movieViewModel.getSwipedMovieIds().contains(tmdbMovieModel.getTmdbId().toString())
@@ -118,12 +116,6 @@ class TrendingFragment: Fragment(), TrendingAdapter.OnTrendingMovieClickedListen
                 val tmdbMovie = trendingAdapter.getItemAtPosition(viewHolder.bindingAdapterPosition) as TmdbMovieModel
                 movieViewModel.getSwipedMovieIds().add(tmdbMovie.getTmdbId().toString())
                 movieViewModel.getExternalIdFromTmdb(tmdbMovie.getTmdbId())
-/*                movieViewModel.getTrendingMoviesList().value?.let {
-                    trendingAdapter.submitData(lifecycle, it.filter {
-                        !movieViewModel.getSwipedMovieIds().contains(it.getTmdbId().toString())
-                    })
-                }
-                showShortToast("Movie added to watchlist")*/
             }
         }
 

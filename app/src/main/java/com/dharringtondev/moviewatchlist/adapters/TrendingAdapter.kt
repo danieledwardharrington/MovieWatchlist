@@ -30,14 +30,14 @@ class TrendingAdapter: PagingDataAdapter<TmdbMovieModel, TrendingAdapter.Trendin
         Log.d(TAG, "onBindViewHolder")
         when (holder) {
             is TrendingViewHolder -> {
-                getItem(position).let {
+                getItem(holder.bindingAdapterPosition).let {
                     if (it != null) {
                         holder.bind(it)
                     }
                 }
                 holder.itemView.setOnClickListener {
                     Log.d(TAG, "Movie clicked")
-                    getItem(position).let {
+                    getItem(holder.bindingAdapterPosition).let {
                         if (it != null) {
                             clickedListener.onTrendingMovieClicked(it)
                         }
