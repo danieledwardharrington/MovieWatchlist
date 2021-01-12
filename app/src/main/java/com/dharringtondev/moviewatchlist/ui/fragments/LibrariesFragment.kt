@@ -70,6 +70,9 @@ class LibrariesFragment: Fragment(), LibrariesAdapter.OnItemClickedListener {
             "sdp" -> {
                 goToUrl(resources.getString(R.string.sdp_url))
             }
+            "TMDb API" -> {
+                goToUrl(resources.getString(R.string.tmdb_url))
+            }
         }
     }
 

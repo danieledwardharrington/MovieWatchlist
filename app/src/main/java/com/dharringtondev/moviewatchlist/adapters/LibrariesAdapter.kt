@@ -9,7 +9,7 @@ class LibrariesAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TAG = "LibrariesAdapter"
 
-    private val librariesList = arrayListOf("Glide", "Gson", "Navigation Component", "OMDb API", "Paging Library V3", "Retrofit", "Room", "RxJava3", "sdp")
+    private val librariesList = arrayListOf("Glide", "Gson", "Navigation Component", "OMDb API", "Paging Library V3", "Retrofit", "Room", "RxJava3", "sdp", "TMDb API")
     private lateinit var listener: OnItemClickedListener
 
     interface OnItemClickedListener{
