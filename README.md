@@ -17,9 +17,18 @@ Again, this is due to the API. When searching, the movies that are given to the 
 only showing the information that's given to me. In the watchlist/history screens, I'm able to get more detailed information for those specific 
 films and can thus display more information on the list itself.
 
+_**Why are you using two different APIs for the movies?**_
+
+Both APIs have something different to offer and I wanted both. My understanding is that OMDb pulls a lot of its information directly from
+IMDb, which is ideal (TMDb isn't an API to get stuff from IMDb, it's its own entity designed to be what IMDb was prior to being acquired by Amazon).
+However, I liked the idea of a trending tab for the app but OMDb doesn't offer this. TMDb has this feature so I leveraged their API for this
+(which is why sometimes the poster is different in the trending page than in the details dialog). Ideally, I'd just use IMDb's API since I assume
+it's the most robust but it's not publicly available.
+
 # Road Map
-For now, the only real feature I'm considering doing is implementing account creation in order to store the user's watchlist/history remotely 
-so that if a user gets a new phone or uses the app on multiple devices, they can have their same information on each device.
+For now, the only major feature I'm considering doing is implementing account creation in order to store the user's watchlist/history remotely
+so that if a user gets a new phone or uses the app on multiple devices, they can have their same information on each device. I also need to implement search
+functionality in the watchlist and history at some point, as well as sorting options.
 
 # For Developers
 
@@ -40,8 +49,7 @@ The main libraries I used are as follows:
 * Room
 * RxJava3
 * sdp
+* TMDb API
 
 The idea here was to really leverage a lot of very modern Android technologies/libraries/practices. I'm going with an MVVM design pattern. As far as my chosen film API, OMDb, it seems 
-to have the most robust library and if my research is correct, it seems to pull directly from IMDb somehow. A good alternative could have been TMDb, which seems a little more feature rich than 
-OMDb. A consideration in the future might be to leverage them both in order to get access to more functionality. OMDb, which had significantly slowed down development, has now been picked back up 
-and will hopefully have more of the features that TMDb has.
+to pull directly from IMDb somehow. I'm using OMDb for the bulk of things and only using TMDb's API to get the 20 trending movies for the week.
