@@ -70,40 +70,27 @@ class TrendingFragment: Fragment(), TrendingAdapter.OnTrendingMovieClickedListen
         movieViewModel.getTrendingMoviesWithPage()
 
         movieViewModel.getExternalIdLiveData().observe(viewLifecycleOwner, Observer { id ->
-            imdbId = id
+            //imdbId = id
             Log.d(TAG, "getExternalIdLD; imdbId: $id")
             movieViewModel.getRemoteMovieById(id)
-/*            if (fromMovieClicked) {
-                Log.d(TAG, "externalIdLD; fromMovieClicked == true")
-                val action = TrendingFragmentDirections.actionTrendingFragmentToFullMovieDialog(id)
-                findNavController().navigate(action)
-                fromMovieClicked = false
-            } else {
-                Log.d(TAG, "externalIdLD; fromMovieClicked == false")
-                movieViewModel.getRemoteMovieById(imdbId)
-                movieViewModel.getTrendingMoviesList().value?.let { pagingData ->
-                    trendingAdapter.submitData(lifecycle, pagingData.filter { tmdbMovie ->
-                        !movieViewModel.getSwipedMovieIds().contains(tmdbMovie.getTmdbId().toString())
-                    })
-                }
-                showShortToast("Movie added to watchlist")
-            }*/
         })
 
-        movieViewModel.getRemoteMovieByIdLiveData().observe(viewLifecycleOwner, Observer {
-            val movie =  it
+        movieViewModel.getRemoteMovieByIdLiveData().observe(viewLifecycleOwner, Observer { omdbMovieModel ->
+            val movie =  omdbMovieModel
             if (fromMovieClicked) {
                 Log.d(TAG, "externalIdLD; fromMovieClicked == true")
-                val action = TrendingFragmentDirections.actionTrendingFragmentToFullMovieDialog(it.getImdbId())
+                val action = TrendingFragmentDirections.actionTrendingFragmentToFullMovieDialog(omdbMovieModel.getImdbId())
                 findNavController().navigate(action)
                 fromMovieClicked = false
             } else {
                 Log.d(TAG, "externalIdLD; fromMovieClicked == false")
                 val movieEntity = movieViewModel.modelToEntity(movie)
                 movieViewModel.insert(movieEntity)
-                movieViewModel.getTrendingMoviesList().value?.let {
-                    trendingAdapter.submitData(lifecycle, it.filter {
-                        !movieViewModel.getSwipedMovieIds().contains(it.getTmdbId().toString())
+                movieViewModel.getTrendingMoviesList().value?.let { pagingData ->
+                    Log.d(TAG, "remoteMovieByIdLiveData observe; from swiped")
+                    trendingAdapter.submitData(lifecycle, pagingData.filter { tmdbMovieModel ->
+                        Log.d(TAG, "submitData filter")
+                        !movieViewModel.getSwipedMovieIds().contains(tmdbMovieModel.getTmdbId().toString())
                     })
                 }
                 showShortToast("Movie added to watchlist")

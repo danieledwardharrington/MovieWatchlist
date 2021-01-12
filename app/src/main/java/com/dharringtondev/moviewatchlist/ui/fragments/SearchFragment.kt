@@ -89,6 +89,7 @@ class SearchFragment: Fragment(), SearchAdapter.OnMovieClickedListener {
                 movieViewModel.insert(movieEntity)
                 movieViewModel.getRemoteMoviesList().value?.let { it1 ->
                     searchAdapter.submitData(lifecycle, it1.filter {
+                        Log.d(TAG, "submitData filter")
                         !movieViewModel.getSwipedMovieIds().contains(it.getImdbId())
                     })
                 }
