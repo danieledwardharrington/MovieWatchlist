@@ -37,14 +37,14 @@ class SearchAdapter: PagingDataAdapter<MovieModel, SearchAdapter.SearchViewHolde
         Log.d(TAG, "onBindViewHolder")
         when (holder) {
             is SearchViewHolder -> {
-                getItem(position).let {
+                getItem(holder.bindingAdapterPosition).let {
                     if (it != null) {
                         holder.bind(it)
                     }
                 }
                 holder.itemView.setOnClickListener {
                     Log.d(TAG, "Movie clicked")
-                    getItem(position).let { it1 ->
+                    getItem(holder.bindingAdapterPosition).let { it1 ->
                         if (it1 != null) {
                             clickedListener.onMovieClicked(it1)
                         }
