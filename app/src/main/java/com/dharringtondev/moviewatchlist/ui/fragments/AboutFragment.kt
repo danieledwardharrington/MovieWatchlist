@@ -79,8 +79,9 @@ class AboutFragment: Fragment(), AboutAdapter.OnItemClickedListener {
 
     private fun shareApp() {
         val intent = Intent()
+        val appUrl = resources.getString(R.string.app_url)
         intent.action=Intent.ACTION_SEND
-        intent.putExtra(Intent.EXTRA_TEXT,"Movie Watchlist: Search. Save. Watch.")
+        intent.putExtra(Intent.EXTRA_TEXT,"Movie Watchlist: Search. Save. Watch.\n${appUrl}")
         intent.type="text/plain"
         startActivity(Intent.createChooser(intent,"Share To:"))
     }

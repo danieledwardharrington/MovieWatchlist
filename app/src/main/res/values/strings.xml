@@ -4,7 +4,7 @@
     <string name="tmdb_api_key">3ab40c34487d886f8ecdcfd893a454c5</string>
 
     <!--URLs-->
-    <string name="app_url"></string>
+    <string name="app_url">https://play.google.com/store/apps/details?id=com.dharringtondev.moviewatchlist</string>
     <string name="google_form_url">https://forms.gle/Hz8pvFd6ATLerN7PA</string>
     <string name="github_url">https://github.com/danieledwardharrington/MovieWatchlist</string>
     <string name="glide_url">https://bumptech.github.io/glide/</string>
