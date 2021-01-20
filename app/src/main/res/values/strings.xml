@@ -18,7 +18,14 @@
     <string name="sdp_url">https://github.com/intuit/sdp</string>
     <string name="tmdb_url">https://developers.themoviedb.org/3/getting-started</string>
 
+    <!--Tutorial Strings-->
     <string name="first_instruction">From the search screen, swipe the movie to the right to add it to your watchlist. If you\'re on the watchlist, swiping right will mark the movie as watched and move it to your history. From your history, swiping right will return it to the watchlist.</string>
     <string name="second_instruction">From either the watchlist or the history screens, swiping left will delete the movie. Note: From the watchlist, this is NOT the same as marking it as watched and it will not appear in your history.</string>
     <string name="third_instruction">That\'s it! If you need to see this screen again, you can find it in the About tab at the bottom of the screen</string>
+
+    <!--Product IDs-->
+    <string name="espresso_id">espresso</string>
+    <string name="latte_id">latte</string>
+    <string name="triple_latte_id">triple_latte</string>
+    <string name="quad_latte_id">quad_latte</string>
 </resources>

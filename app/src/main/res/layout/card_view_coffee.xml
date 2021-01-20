@@ -15,24 +15,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.02"/>
+            app:layout_constraintGuide_percent="0.03"/>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/top_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.02"/>
+            app:layout_constraintGuide_percent="0.03"/>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/bottom_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.98"/>
+            app:layout_constraintGuide_percent="0.97"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/end_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.97"/>
 
         <TextView
-            android:id="@+id/coffee_item_tv"
+            android:id="@+id/coffee_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8sdp"
@@ -41,6 +48,18 @@
             app:layout_constraintTop_toTopOf="@id/top_guideline"
             app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
             android:text="Coffee"
+            android:textSize="@dimen/_16sdp"/>
+
+        <TextView
+            android:id="@+id/coffee_price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:fontFamily="sans-serif"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintTop_toTopOf="@id/top_guideline"
+            app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
+            android:text="$0.99"
             android:textSize="@dimen/_16sdp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
