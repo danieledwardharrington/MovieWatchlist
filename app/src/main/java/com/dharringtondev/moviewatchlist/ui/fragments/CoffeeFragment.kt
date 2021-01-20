@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingClientStateListener
+import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.PurchasesUpdatedListener
 import com.dharringtondev.moviewatchlist.R
 import com.dharringtondev.moviewatchlist.adapters.CoffeeAdapter
 import com.dharringtondev.moviewatchlist.databinding.FragmentCoffeeBinding
@@ -62,7 +65,26 @@ class CoffeeFragment: Fragment(), CoffeeAdapter.OnProductClickedListener {
 
     }
 
+    private val purchasesUpdatedListener = PurchasesUpdatedListener { billingResult, purchases ->
+        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
+            for (purchase in purchases) {
+
+            }
+        }
+    }
+
     private fun setupBillingClient() {
-        val billingClient = BillingClient.newBuilder(requireActivity()).enablePendingPurchases().setListener(this@CoffeeFragment).build()
+        val billingClient = BillingClient.newBuilder(requireActivity()).enablePendingPurchases().setListener(purchasesUpdatedListener).build()
+        billingClient.startConnection(object: BillingClientStateListener {
+            override fun onBillingSetupFinished(billingResult: BillingResult) {
+                if(billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+
+                }
+            }
+
+            override fun onBillingServiceDisconnected() {
+
+            }
+        })
     }
 }
