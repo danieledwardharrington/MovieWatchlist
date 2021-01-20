@@ -1,4 +1,4 @@
-package com.dharringtondev.moviewatchlist.repository
+package com.dharringtondev.moviewatchlist.repository.pagingsource
 
 import android.util.Log
 import androidx.paging.rxjava3.RxPagingSource

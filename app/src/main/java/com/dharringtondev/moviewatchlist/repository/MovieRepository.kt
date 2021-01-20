@@ -14,6 +14,8 @@ import com.dharringtondev.moviewatchlist.remote.omdb.models.MovieModel
 import com.dharringtondev.moviewatchlist.remote.omdb.OmdbService
 import com.dharringtondev.moviewatchlist.remote.tmdb.TmdbService
 import com.dharringtondev.moviewatchlist.remote.tmdb.models.TmdbMovieModel
+import com.dharringtondev.moviewatchlist.repository.pagingsource.RemoteOmdbMoviePagingSource
+import com.dharringtondev.moviewatchlist.repository.pagingsource.RemoteTmdbMoviePagingSource
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
